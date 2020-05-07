@@ -1,0 +1,27 @@
+{
+  "name": "dataexpress",
+  "version": "0.0.0",
+  "description": "MTM282A: Interactive Web Dev: Lab: The Data Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephreed2600/interactive-dataexpress.git"
+  },
+  "author": "Joe Reed, Ryan Unroe, Chaz Janke",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/josephreed2600/interactive-dataexpress/issues"
+  },
+  "homepage": "https://github.com/josephreed2600/interactive-dataexpress#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "logger": "github:josephreed2600/logger#master",
+    "mongoose": "^5.9.12",
+    "pug": "^2.0.4"
+  }
+}
