@@ -1,0 +1,12 @@
+extends signedOut
+
+
+block content
+    h1(id="title") Login
+    form(method="post" action="/login")
+        label(for="username") Username:
+        input(id="username" type="text")
+        label(for="password") Password:
+        input(id="password" type="password")
+        p(class="errorMsg") Username or password is incorrect!
+        input(type="submit" value="Login")
