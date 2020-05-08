@@ -1,18 +1,18 @@
 # Schemas
 
 Account:
-	- `username`: String, unique
-	- `password`: String, salt/hash
-	- `salt`: Number
-	- `email`: String
-	- `dob`: Date
-	- `questions`: Array of objects
-		- `id`: Number, key into table of Questions
-		- `answer`: String, salt/hash
-		- `salt`: Number
+ - `username`: String, unique
+ - `password`: String, salt/hash
+ - `salt`: Number
+ - `email`: String
+ - `dob`: Date
+ - `questions`: Array of objects
+ 	- `id`: Number, key into table of Questions
+ 	- `answer`: String, salt/hash
+ 	- `salt`: Number
 
 Question:
-	- `question`: String
+ - `question`: String
 
 
 # FAQ
