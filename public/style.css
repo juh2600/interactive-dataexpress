@@ -12,6 +12,9 @@ body {
     padding: 0;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
 /*=====================================
                 Nav
 ======================================*/
@@ -36,13 +39,13 @@ nav#signedOut > ul {
     flex:3;
 
 }
-nav#signedOut .navBtn {
+.navBtn {
     flex:1;
     list-style: none;
     max-width: 8em;
 }
 
-nav#signedOut .navBtn > a {
+.navBtn > a {
     background-color:#222;
     transition: background-color 0.2s ease;
     cursor: pointer;
@@ -56,9 +59,109 @@ nav#signedOut .navBtn > a {
     text-decoration: none;
 }
 
-nav#signedOut .navBtn > a:hover {
+.navBtn > a:hover {
     background-color:#333;
 }
+
+
+nav#signedIn {
+    display:flex;
+    justify-content: space-between;
+}
+#accountBtn {
+    height:7vh;
+    width:8vh;
+    background-color:#333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#accountBtn:hover {
+    background-color: #404040;
+}
+
+#accountBtn > div {
+    width: 30px;
+    position:relative;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.menuBar {
+    width:100%;
+    background-color: #fff;
+    border-radius: 10%;
+    height:1.5px;
+}
+.menuBar.mid{
+    margin:5px 0;
+}
+
+#slider {
+    position: fixed;
+    width:350px;
+    right:-350px;
+    top:7vh;
+    height:93vh;
+    background-color: #fff;
+    z-index: 10;
+    transition: right 0.5s ease;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#sliderContent {
+    display:flex;
+    flex-direction: column;
+    
+}
+
+#sliderContent > div > a:hover {
+    background-color: #eee;
+}
+
+.sliderOption {
+    flex:1;
+    width:100%;
+    max-height:3em;
+    min-height:3em;
+    font-size: 1.1em;
+}
+
+.sliderOption > a{
+    width:100%;
+    height: 100%;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 2em;
+    transition: background-color 0.2s ease;
+}
+
+#sliderLogout {
+    justify-self: flex-end;
+}
+#sliderLogout > a {
+    background-color:#222;
+    color: #fff;
+    text-align:center;
+    padding:0;
+}
+#sliderLogout > a:hover {
+    background-color:#333;
+}
+
+#screen {
+    background-color: rgba(0,0,0,0.4);
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 2;
+}
+
 /*=====================================
                 Body
 ======================================*/
@@ -73,9 +176,21 @@ nav#signedOut .navBtn > a:hover {
 }
 
 /*=====================================
-            Landing Body
+                Forms
 ======================================*/
-  
+form {
+    margin:0 auto;
+}
+form > div {
+    margin: 0 auto;
+}
+label {
+    display:block;
+}
+select {
+    display:block;
+    margin-bottom:1em;
+}
 
 
 /*=====================================

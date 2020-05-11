@@ -1,7 +1,7 @@
 extends signedIn
 
 block content
-form(method="post" action="/signup")
+    form(method="post" action="/accountEdit")
         div(id="usernameDiv")
             label(for="username") Username: 
             input(type="text" id="username" value=user.username)
@@ -25,35 +25,36 @@ form(method="post" action="/signup")
             p(class="errorMsg")
         div(id="securityQuestionDiv1")
             label(for="securityQuestion1") Security Question 1:
-            select(id="securityQuestion1")
+            select(id="securityQuestion1" data-qid=user.questions[0].id)
                 option(value="0") What was your childhood nickname?
                 option(value="1") In what city did you meet your spouse/significant other?
                 option(value="2") What is the name of your favorite childhood friend?
                 option(value="3") What street did you live on in third grade?
                 option(value="4") What is your oldest sibling's middle name?
             //- label(for="securityAnswer1") Answer:
-            input(type="text" id="securityAnswer1")
+            input(type="text" id="securityAnswer1" value=user.questions[0].answer)
             p(class="errorMsg")
         div(id="securityQuestionDiv2")
             label(for="securityQuestion2") Security Question 2:
-            select(id="securityQuestion2")
+            select(id="securityQuestion2" data-qid=user.questions[1].id)
                 option(value="0") What school did you attend for sixth grade?
                 option(value="1") What was your childhood phone number?
                 option(value="2") What is your oldest cousin's first and last name?
                 option(value="3") What was the name of your first stuffed animal?
                 option(value="4") In what city or town did your mother and father meet?
             //- label(for="securityAnswer2") Answer:
-            input(type="text" id="securityAnswer2")
+            input(type="text" id="securityAnswer2" value=user.questions[1].answer)
             p(class="errorMsg")
         div(id="securityQuestionDiv3")
             label(for="securityQuestion3") Security Question 3:
-            select(id="securityQuestion3")
+            select(id="securityQuestion3" data-qid=user.questions[2].id)
                 option(value="0") Where were you when you had your first kiss?
                 option(value="1") What is the first name of the boy or girl that you first kissed?
                 option(value="2") What was the last name of your third grade teacher?
                 option(value="3") In what city does your nearest sibling live?
                 option(value="4") In what city or town was your first job?
             //- label(for="securityAnswer3") Answer:
-            input(type="text" id="securityAnswer3")
+            input(type="text" id="securityAnswer3" value=user.questions[2].answer)
             p(class="errorMsg")
         input(type="submit" value="Update Account")
+    script(src="/scripts/accountEditPage.js")

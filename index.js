@@ -23,11 +23,25 @@ app.get("/signup", (req, res) => {
 
 
 app.get("/account/edit", (req, res) => {
-    res.render("accountEdit");
+    let user = {
+        username: "fuckboi",
+        email: "hotguy69@yahoo.mail",
+        dob: "2001-05-12",
+        questions: [
+            {id: 3, answer: "First answerrrrr"},
+            {id: 2, answer: "mid answerrrrr"},
+            {id: 2, answer: "last answerrrrr"}
+        ]
+    }
+    res.render("accountEdit", {
+        user
+    });
 });
 app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });
 
-
+app.get("/logout", (req, res) => {
+    res.redirect("/");
+})
 app.listen(3000);

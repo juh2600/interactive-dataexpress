@@ -2,10 +2,17 @@ extends layout
 
 block nav
     nav(id="signedIn")
+        div(class="navBtn")
+            a(href="/dashboard") Dashboard
         div(id="accountBtn")
+            div
+                div(class="menuBar top")
+                div(class="menuBar mid")
+                div(class="menuBar bot")
+    div(id="screen")
     div(id="slider")
         div(id="sliderContent")
-            div(id="sliderEdit")
-                a(href="/account/edit") Edit
-            div(id="sliderLogout")
-                a(href="/logout") Logout
+            div(id="sliderEdit" class="sliderOption")
+                a(href="/account/edit") Edit Account
+        div(id="sliderLogout" class="sliderOption")
+            a(href="/logout") Logout
