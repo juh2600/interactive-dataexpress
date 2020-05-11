@@ -1,0 +1,20 @@
+{
+	"username": "joe",
+	"password": "3Jjjjjjj",
+	"email": "joe@t.co",
+	"dob": "2020-01-03",
+	"questions": [
+		{
+			"id": null,
+			"answer": "one"
+		},
+		{
+			"id": null,
+			"answer": "two"
+		},
+		{
+			"id": null,
+			"answer": "three"
+		}
+	]
+}
