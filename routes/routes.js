@@ -1,4 +1,20 @@
 const accounts = require('../api/accounts.js');
+
+/*Making an interceptor*/
+const express = require('express');
+
+const app = express()
+const intercept = (req, res, next) => {
+    console.log('Intercepted on ', req.path);
+    next();
+};
+app.use(intercept);
+app.get('/', (req, res) => {
+    console.log('Intercepted to the index.');
+});
+
+
+/*Connection to database*/
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/data', 
@@ -8,10 +24,37 @@ let mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error(s):'));
 mdb.once('open', callback => {});
 
+/*Connection to the other pages*/
+accounts.index = (req, res) => {
+    res.render('index', {
+        title: 'landing'
+    });
+}
+accounts.login = (req, res) => {
+    res.render('login', {
+        title: "login"
+    });
+}
+accounts.signedIn = (req, res) => {
+    res.render('signedIn', {
+        title: 'signedIn'
+    });
+}
+accounts.signedOut = (req, res) => {
+    res.render('signedOut', {
+        title: 'signedOut'
+    });
+}
+accounts.signUp = (req, res) => {
+    res.render('signUp', {
+        title: 'signUp'
+        // account
+    });
+}
 
-/*Joes Code Examples*/
-
-accounts.create({
+/*Joe's Code Examples*/
+accounts.create = (req, res) => {
+    let account = new Account({
     username: String,
     password: String,
     email: String,
@@ -30,16 +73,20 @@ accounts.create({
             answer: String
         }
     ]
-});
+    });
+}
 
 accounts.get(username);
 
-accounts.update(username, {
+accounts.edit(username, {
     //object containing any of the things above
-    username
+    // account.username = req.body.username;
+    account
 });
 
-accounds.remove(username);
+accounts.remove(username);
+
+accounts.authenticate(username, password);
 
 
 // const clearCart = (req, res) => {
@@ -73,3 +120,5 @@ accounds.remove(username);
 //     return false;
 // } else return true;
 // };
+
+app.listen(3000);
