@@ -28,9 +28,10 @@ const toggleNavBar = () => {
 }
 
 
-
-document.getElementById("screen").style.display = "none";
-console.log("running?");
-
-document.getElementById("accountBtn").addEventListener("click", toggleNavBar);
-document.getElementById("screen").addEventListener("click", closeNavbar);
+window.onload = () => {
+    try{
+        document.getElementById("screen").style.display = "none";
+        document.getElementById("accountBtn").addEventListener("click", toggleNavBar);
+        document.getElementById("screen").addEventListener("click", closeNavbar);
+    } catch(e) {}
+}

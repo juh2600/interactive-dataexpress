@@ -4,11 +4,13 @@ block nav
     nav(id="signedIn")
         div(class="navBtn")
             a(href="/dashboard") Dashboard
-        div(id="accountBtn")
-            div
-                div(class="menuBar top")
-                div(class="menuBar mid")
-                div(class="menuBar bot")
+        div(id="account")
+            p=user.username
+            div(id="accountBtn")
+                div
+                    div(class="menuBar top")
+                    div(class="menuBar mid")
+                    div(class="menuBar bot")
     div(id="screen")
     div(id="slider")
         div(id="sliderContent")

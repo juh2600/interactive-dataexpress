@@ -1,28 +1,21 @@
 extends signedIn
 
 block content
-    form(method="post" action="/accountEdit")
+    h1(id="title") Edit Account
+    form(id="dataForm" method="post" action="/account/edit" data-method="edit" onsubmit="return submitForm()")
+        p(id="headErrMsg" class="errorMsg") Please fill out the following fields:
         div(id="usernameDiv")
             label(for="username") Username: 
             input(type="text" id="username" value=user.username)
-            p(class="errorMsg")
-        div(id="passwordDiv")
-            div(id="newPasswordDiv")
-                label(for="newPassword") New Password: 
-                input(type="password" id="newPassword")
-                p(class="errorMsg")
-            div(id="oldPasswordDiv")
-                label(for="oldPassword") Old Password: 
-                input(type="password" id="oldPassword")
-                p(class="errorMsg")
+            p(class="errorMsg") Must be between 3 and 32 characters
         div(id="emailDiv")
             label(for="email") Email: 
             input(type="email" id="email" value=user.email)
-            p(class="errorMsg")
+            p(class="errorMsg") Must be valid email
         div(id="dobDiv")
             label(for="dob") Birthdate: 
             input(type="date" id="dob" value=user.dob)
-            p(class="errorMsg")
+            p(class="errorMsg") Must be 13 or older
         div(id="securityQuestionDiv1")
             label(for="securityQuestion1") Security Question 1:
             select(id="securityQuestion1" data-qid=user.questions[0].id)
@@ -33,7 +26,7 @@ block content
                 option(value="4") What is your oldest sibling's middle name?
             //- label(for="securityAnswer1") Answer:
             input(type="text" id="securityAnswer1" value=user.questions[0].answer)
-            p(class="errorMsg")
+            p(class="errorMsg") Input cannot be empty
         div(id="securityQuestionDiv2")
             label(for="securityQuestion2") Security Question 2:
             select(id="securityQuestion2" data-qid=user.questions[1].id)
@@ -44,7 +37,7 @@ block content
                 option(value="4") In what city or town did your mother and father meet?
             //- label(for="securityAnswer2") Answer:
             input(type="text" id="securityAnswer2" value=user.questions[1].answer)
-            p(class="errorMsg")
+            p(class="errorMsg") Input cannot be empty
         div(id="securityQuestionDiv3")
             label(for="securityQuestion3") Security Question 3:
             select(id="securityQuestion3" data-qid=user.questions[2].id)
@@ -55,6 +48,19 @@ block content
                 option(value="4") In what city or town was your first job?
             //- label(for="securityAnswer3") Answer:
             input(type="text" id="securityAnswer3" value=user.questions[2].answer)
-            p(class="errorMsg")
+            p(class="errorMsg") Input cannot be empty
+        
+        div(id="passwordsDiv")
+            hr
+            div(id="newPasswordDiv")
+                label(for="newPassword") New Password: 
+                input(type="password" id="newPassword")
+                p(class="errorMsg") Must have 1 number, 1 capital and be at least 8 characters long
+            div(id="oldPasswordDiv")
+                label(for="oldPassword") Old Password: 
+                input(type="password" id="oldPassword")
+                p(class="errorMsg") Incorrect Password
+            hr
         input(type="submit" value="Update Account")
     script(src="/scripts/accountEditPage.js")
+    script(src="/scripts/formValidation.js")

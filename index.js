@@ -20,25 +20,26 @@ app.get("/signup", (req, res) => {
     res.render("signup");
 });
 
-
+let user = {
+    username: "fuckboiiiiiiii",
+    email: "hotguy69@yahoo.mail",
+    dob: "2001-05-12",
+    questions: [
+        {id: 3, answer: "First answerrrrr"},
+        {id: 2, answer: "mid answerrrrr"},
+        {id: 2, answer: "last answerrrrr"}
+    ]
+}
 
 app.get("/account/edit", (req, res) => {
-    let user = {
-        username: "fuckboi",
-        email: "hotguy69@yahoo.mail",
-        dob: "2001-05-12",
-        questions: [
-            {id: 3, answer: "First answerrrrr"},
-            {id: 2, answer: "mid answerrrrr"},
-            {id: 2, answer: "last answerrrrr"}
-        ]
-    }
     res.render("accountEdit", {
         user
     });
 });
 app.get("/dashboard", (req, res) => {
-    res.render("dashboard");
+    res.render("dashboard", {
+        user
+    });
 });
 
 app.get("/logout", (req, res) => {

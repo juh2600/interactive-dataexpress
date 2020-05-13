@@ -10,6 +10,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    font-family: "Montserrat";
 }
 
 body::-webkit-scrollbar {
@@ -24,6 +25,8 @@ nav {
     background-color: #222;
     color: #fff;
     margin:0;
+    position:fixed;
+    top:0;
 }
 nav#signedOut {
     display:flex;
@@ -68,9 +71,15 @@ nav#signedIn {
     display:flex;
     justify-content: space-between;
 }
+#account {
+    display:flex;
+}
+#account > p {
+    margin-right: 1em;
+}
 #accountBtn {
     height:7vh;
-    width:8vh;
+    padding:0 1em; 
     background-color:#333;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -79,8 +88,9 @@ nav#signedIn {
     background-color: #404040;
 }
 
+
 #accountBtn > div {
-    width: 30px;
+    width: 4vh;
     position:relative;
     top:50%;
     left:50%;
@@ -90,10 +100,10 @@ nav#signedIn {
     width:100%;
     background-color: #fff;
     border-radius: 10%;
-    height:1.5px;
+    height:0.15em;
 }
 .menuBar.mid{
-    margin:5px 0;
+    margin:0.8vh 0;
 }
 
 #slider {
@@ -153,7 +163,7 @@ nav#signedIn {
 }
 
 #screen {
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.3);
     width:100vw;
     height:100vh;
     position:fixed;
@@ -168,7 +178,7 @@ nav#signedIn {
 
 #main{
     min-height: 77vh;
-    margin:0;
+    margin:7vh 0 0 0;
     padding: 2em;
 }
 #title {
@@ -180,18 +190,78 @@ nav#signedIn {
 ======================================*/
 form {
     margin:0 auto;
+    max-width: 500px;
 }
 form > div {
-    margin: 0 auto;
+    margin: 0.5em auto;
 }
 label {
     display:block;
+    margin-bottom: 0.3em;
 }
 select {
     display:block;
     margin-bottom:1em;
+    width: 100%;
+    padding:0.3em;
+    border-radius: 5px;
+    
+}
+input:not([type="submit"]) {
+    box-sizing: border-box;
+    width:100%;
+    padding:0.3em;
+    border:1.5px solid #aaa;
+    border-radius: 5px;
 }
 
+.errorMsg {
+    color:red;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-top:0.5em;
+    visibility: hidden;
+}
+
+#headErrMsg {
+    font-size: 1em;
+}
+
+input.red{
+    border-color:#f00;
+}
+input.green{
+    border-color: #0c0;
+}
+form hr {
+    height:1.5px;
+    background-color: #999;
+    margin-bottom: 1em;
+    border:none;
+}
+
+#passwordsDiv {
+    margin:3em 0;
+}
+
+#loginForm > div {
+    margin:1.5em 0;
+}
+
+input[type="submit"] {
+    margin:auto;
+    display:block;
+    padding:0.8em 1.5em;
+    border-radius: 5px;
+    background-color: #efefef;
+    border:1px solid #888;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #ddd;
+}
 
 /*=====================================
                 Footer
