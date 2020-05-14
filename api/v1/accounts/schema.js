@@ -19,10 +19,10 @@ const accountSchema = mongoose.Schema({
 
 	password: {
 		type: String,
-		required: [ validator.exist.password ],
-		validate: {
-			validator: wrapErrorForMongoose(validator.valid.password)
-		}
+		required: [ validator.exist.password ]//,
+		// validate: {
+		// 	validator: wrapErrorForMongoose(validator.valid.password)
+		// }
 	},
 
 	email: {

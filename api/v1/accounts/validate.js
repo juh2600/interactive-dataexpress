@@ -3,12 +3,12 @@ require('dotenv').config();
 const test = (regex) => (x) => regex.test(x);
 
 const params = {
-	username: {
-		length: {
-			min: 3,
-			max: 32
-		}
-	},
+	// username: {
+	// 	length: {
+	// 		min: 3,
+	// 		max: 32
+	// 	}
+	// },
 	username: [
 		{
 			desc: "length of between three and thirty-two characters",
@@ -53,13 +53,12 @@ const exist = {
 	email: isNotEmpty,
 	dob: isNotEmpty,
 	questions: (qs) => { return isNotEmpty(qs) && qs.toString() != [].toString() && qs.forEach; },
-	question: (q) => isNotEmpty
+	question: isNotEmpty
 };
 
 const valid = {
 
 	username: (username) => {
-		console.log('username ', username);
 		let failedCriteria = [];
 		params.username.forEach((criterion) => { if(!criterion.test(username)) failedCriteria.push(criterion.desc); });
 		if(failedCriteria.length > 0)
@@ -68,7 +67,6 @@ const valid = {
 	},
 
 	password: (password) => {
-		console.log('password ', password);
 		let failedCriteria = [];
 		params.password.forEach((criterion) => { if(!criterion.test(password)) failedCriteria.push(criterion.desc); });
 		if(failedCriteria.length > 0)
@@ -77,24 +75,20 @@ const valid = {
 	},
 
 	email: (email) => {
-		console.log('email ', email);
 		return true;
 	},
 
 	dob: (dob) => {
-		console.log('dob ', dob);
 		if(dob == 'Invalid Date')
 			throw `Invalid date`;
 		return true;
 	},
 
 	questions: (qs) => {
-		console.log('questions ', qs);
 		return true;
 	},
 
 	question: (q) => {
-		console.log('question ', q);
 		// FIXME ensure that id exists and is a question
 		return isNotEmpty(q.answer);
 		return isNotEmpty(q.id) && isNotEmpty(q.answer);
