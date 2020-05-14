@@ -1,58 +1,70 @@
 const accounts = require('../api/accounts.js');
 
-/*Making an interceptor*/
-const express = require('express');
-
-const app = express()
-const intercept = (req, res, next) => {
-    console.log('Intercepted on ', req.path);
-    next();
-};
-app.use(intercept);
-app.get('/', (req, res) => {
-    console.log('Intercepted to the index.');
-});
 
 
-/*Connection to database*/
-let mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/data', 
-{useUnifiedTopology: true, useNewUrlParser: true});
 
-let mdb = mongoose.connection;
-mdb.on('error', console.error.bind(console, 'connection error(s):'));
-mdb.once('open', callback => {});
+// /*Connection to database*/
+// let mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/data', 
+// {useUnifiedTopology: true, useNewUrlParser: true});
+
+// let mdb = mongoose.connection;
+// mdb.on('error', console.error.bind(console, 'connection error(s):'));
+// mdb.once('open', callback => {});
 
 /*Connection to the other pages*/
 accounts.index = (req, res) => {
-    res.render('index', {
-        title: 'landing'
+    res.render('/', {
+        title: 'Home'
     });
 }
-accounts.login = (req, res) => {
+accounts.login = (req, res) => {    
+    if(err) return console.error(err);
     res.render('login', {
-        title: "login"
-    });
-}
-accounts.signedIn = (req, res) => {
-    res.render('signedIn', {
-        title: 'signedIn'
-    });
-}
-accounts.signedOut = (req, res) => {
-    res.render('signedOut', {
-        title: 'signedOut'
+        title: "Login"
     });
 }
 accounts.signUp = (req, res) => {
+    if(err) return console.error(err);
     res.render('signUp', {
-        title: 'signUp'
-        // account
+        title: 'Sign Up'
+        // accounts
     });
 }
 
-/*Joe's Code Examples*/
+/*These are private routes*/
+accounts.dashboard = (req, res) => {
+    res.render('/dashboard', {
+        title: 'DashBoard'
+    });
+}
+accounts.logout = (req, res) => {
+    res.render('logout', {
+        title: 'Signed Out'
+    });
+}
+accounts.accountEdit = (req, res) => {
+    if(err) return console.error(err);
+    res.render('/account/edit', {
+        title: 'Edit Account',
+        // accounts
+    });
+}
+accounts.create = (req, res) => {
+    if(!requirePresenceOfParameter(req.body.username, 'username', res)) return;
+    if(!requirePresenceOfParameter(req.body.password, 'password', res)) return;
+    if(!requirePresenceOfParameter(req.body.email, 'email', res)) return;
+    if(!requirePresenceOfParameter(req.body.dob, 'dob', res)) return;
+    if(!requirePresenceOfParameter(req.body.questions, 'questions', res)) return;
+        {
+            accounts.api.create(req.body).then(() => {
+                respond("Ok")
+            }).catch(500, err, res)  
+        }
+    }
+
+/*Joe's Code Examples with me adding to them*/
 accounts.create = (req, res) => {
     let account = new Account({
     username: String,
@@ -74,19 +86,21 @@ accounts.create = (req, res) => {
         }
     ]
     });
+    res.redirect('/');
 }
 
 accounts.get(username);
 
 accounts.edit(username, {
     //object containing any of the things above
-    // account.username = req.body.username;
-    account
+    // account.username = req.body.username,
+    // account
 });
 
-accounts.remove(username);
+// accounts.remove(username);
 
-accounts.authenticate(username, password);
+
+// accounts.authenticate(username, password);
 
 
 // const clearCart = (req, res) => {
@@ -120,5 +134,3 @@ accounts.authenticate(username, password);
 //     return false;
 // } else return true;
 // };
-
-app.listen(3000);
