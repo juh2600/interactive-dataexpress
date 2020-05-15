@@ -22,6 +22,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "logger": "github:josephreed2600/logger#master",
     "mongoose": "^5.9.12",
     "pug": "^2.0.4"
