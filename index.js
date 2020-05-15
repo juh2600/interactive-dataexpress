@@ -7,11 +7,20 @@ const path = require("path");
 const app = express();
 
 /*Making an interceptor*/
+
+/*
+app.use(expressSession({
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    saveUninitialized: true,
+    resave: true
+}));
+
 const intercept = (req, res, next) => {
     console.log('Intercepted on ', req.path);
     next();
 };
 app.use(intercept);
+*/
 app.get('/', (req, res) => {
     console.log('You must be logged in.');
     res.send('You must be logged in.');
@@ -20,7 +29,7 @@ app.get('/', (req, res) => {
 /*Body parser and a little interceptor usage*/
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
-
+/*
 const checkAuth = (req, res, next) => {
     if(req.session.user && req.session.user.isAuthenicated) {
         next();
@@ -28,13 +37,6 @@ const checkAuth = (req, res, next) => {
         res.redirect('/');
     }
 };
-
-app.use(expressSession({
-    secret: process.env.EXPRESS_SESSION_SECRET,
-    saveUninitialized: true,
-    resave: true
-}));
-
 /*
 app.post('/login', urlencodedParser, (req, res) => {
     console.log(req.body.username);
@@ -83,10 +85,7 @@ const routeManager = require('./routes/manager');
 routeFiles.forEach((file) => {
         logger.info(`Adding ${file} routes...`);
         let component = require(`./routes/${file}`);
-        if(component.configure) component.configure({
-                player,
-                media_dir: process.env.MEDIA_DIR
-        });
+        if(component.configure) component.configure({});
         routeManager.apply(app, component);
         logger.info(`Added ${file} routes.`);
 });
