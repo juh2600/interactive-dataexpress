@@ -112,4 +112,11 @@ routeFiles.forEach((file) => {
 });
 logger.info('Configured routes.');
 
+
+app.get("/logout", (req, res) => {
+    res.redirect("/");
+})
+
+
 app.listen(3000);
+

@@ -3,7 +3,7 @@ extends signedOut
 
 block content
     h1(id="title") Login
-    form(id="loginForm" method="post" action="/login")
+    form(id="loginForm" method="post" action="/login" onsubmit="submitForm()")
         div(id="usernameDiv")
             label(for="username") Username:
             input(id="username" type="text")

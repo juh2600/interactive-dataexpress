@@ -11,7 +11,9 @@ const closeNavbar = () => {
     isNavbarOpen = false;
     console.log("closed");
     document.getElementById("screen").style.display = "none";
-    document.getElementById("slider").style.right = "-350px";
+    let w = document.getElementById("slider").offsetWidth;
+    console.log(w);
+    document.getElementById("slider").style.right = `-${w}px`;
 
 
 }
@@ -33,5 +35,6 @@ window.onload = () => {
         document.getElementById("screen").style.display = "none";
         document.getElementById("accountBtn").addEventListener("click", toggleNavBar);
         document.getElementById("screen").addEventListener("click", closeNavbar);
+        closeNavbar();
     } catch(e) {}
 }
