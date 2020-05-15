@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/josephreed2600/interactive-dataexpress#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "logger": "github:josephreed2600/logger#master",
     "mongoose": "^5.9.12",
