@@ -76,6 +76,27 @@ app.get("/account/edit", checkAuth, (req, res) => {
 app.get("/dashboard", checkAuth, (req, res) => {
     res.render("dashboard");
     res.send('You must be singed in!')
+
+let user = {
+    username: "fuckboiiiiiiii",
+    email: "hotguy69@yahoo.mail",
+    dob: "2001-05-12",
+    questions: [
+        {id: 3, answer: "First answerrrrr"},
+        {id: 2, answer: "mid answerrrrr"},
+        {id: 2, answer: "last answerrrrr"}
+    ]
+}
+
+app.get("/account/edit", (req, res) => {
+    res.render("accountEdit", {
+        user
+    });
+});
+app.get("/dashboard", (req, res) => {
+    res.render("dashboard", {
+        user
+    });
 });
 */
 
