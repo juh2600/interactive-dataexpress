@@ -45,4 +45,6 @@ app.get("/dashboard", (req, res) => {
 app.get("/logout", (req, res) => {
     res.redirect("/");
 })
+
 app.listen(3000);
+
