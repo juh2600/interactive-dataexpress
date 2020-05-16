@@ -53,25 +53,25 @@ const checkSecurityQuestion = (req, res) => {
 const routes = [
     {
         uri: '/api/v1/accounts/create',
-        methods: ['post'],
+        method: 'post',
         handler: createAccount
     },
 
     {
         uri: '/api/v1/accounts/update',
-        methods: ['post'],
+        method: 'post',
         handler: updateAccount
     },
 
     {
         uri: '/api/v1/accounts/authenticate/password',
-        methods: ['post'],
+        method: 'post',
         handler: checkPassword
     },
 
     {
         uri: '/api/v1/accounts/authenticate/question',
-        methods: ['post'],
+        method: 'post',
         handler: checkSecurityQuestion
     }
 

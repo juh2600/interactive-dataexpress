@@ -20,11 +20,11 @@ const intercept = (req, res, next) => {
     next();
 };
 app.use(intercept);
-*/
 app.get('/', (req, res) => {
     console.log('You must be logged in.');
     res.send('You must be logged in.');
 });
+*/
 
 /*Body parser and a little interceptor usage*/
 const bodyParser = require('body-parser');

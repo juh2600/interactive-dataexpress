@@ -24,13 +24,13 @@ const routes = [
 
 	{
 		uri: '/api/v1/questions/:question_id',
-		methods: ['get'],
+		method: 'get',
 		handler: getOne
 	},
 
 	{
 		uri: '/api/v1/questions/banks/:question_bank',
-		methods: ['get'],
+		method: 'get',
 		handler: getBank
 	},
 

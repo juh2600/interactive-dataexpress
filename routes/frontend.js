@@ -30,10 +30,14 @@ const dashboard = (req, res) => {
 	});
 };
 
+
 const logout = (req, res) => {
+	/*
 	res.render('logout', {
 		title: 'Signed Out'
 	});
+	*/
+	res.redirect('/');
 };
 
 const editAccount = (req, res) => {
@@ -45,31 +49,31 @@ const editAccount = (req, res) => {
 const routes = [
 	{
 		uri: '/',
-		methods: ['get'],
+		method: 'get',
 		handler: index
 	},
 
 	{
 		uri: '/login',
-		methods: ['get'],
+		method: 'get',
 		handler: login
 	},
 
 	{
 		uri: '/signup',
-		methods: ['get'],
+		method: 'get',
 		handler: signUp
 	},
 
 	{
 		uri: '/dashboard',
-		methods: ['get'],
+		method: 'get',
 		handler: dashboard
 	},
 
 	{
 		uri: '/account/edit',
-		methods: ['get'],
+		method: 'get',
 		handler: editAccount
 	}
 ];
@@ -147,4 +151,4 @@ accounts.edit(username, {
 //     return false;
 // } else return true;
 // };
-*/
+ */
