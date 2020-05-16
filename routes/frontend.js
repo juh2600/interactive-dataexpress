@@ -1,50 +1,78 @@
 const logger = require('logger').get('HTTP::Frontend');
-
+const expressSession = require('express-session');
 const AccountsAPI = require('../api/v1/accounts.js');
 const { respond, requirePresenceOfParameter } = require('./util');
 
+let app = null;
+
+const requireSignedIn = (req, res, next) => {
+    if(req.session.user && req.session.user.isAuthenticated) {
+        next();
+    } else {
+        res.redirect("/");
+    }
+}
+
 // Public routes
+//GET
 const index = (req, res) => {
-	res.render('landing', {
-		title: 'Home'
-	});
+	res.render('landing');
 };
 
 const login = (req, res) => {    
-	res.render('login', {
-		title: 'Login'
-	});
+	res.render('login');
 };
 
 const signUp = (req, res) => {
-	res.render('signup', {
-		title: 'Sign Up'
-	});
+	res.render('signup');
 };
+
+const logout = (req, res) => {
+	res.redirect('/');
+};
+//POST
+const loginPost = (req, res) => {
+	requirePresenceOfParameter(req.body.username, "username", res);
+	requirePresenceOfParameter(req.body.password, "password", res);
+	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
+		if(isOK) {
+			req.session.user = {
+				isAuthenticated: true,
+				username: req.body.username
+			}
+			res.redirect("/dashboard");
+		}
+		else {
+			res.redirect("/");
+		}
+	}).catch(err => {
+		respond(500, `Error while logging in: ${err}`, res);
+	});
+
+}
+
 
 
 // Private routes
+//GET
 const dashboard = (req, res) => {
-	res.render('/dashboard', {
-		title: 'DashBoard'
+	res.render('dashboard', {
+		user: req.session.user
 	});
 };
 
-
-const logout = (req, res) => {
-	/*
-	res.render('logout', {
-		title: 'Signed Out'
-	});
-	*/
-	res.redirect('/');
-};
 
 const editAccount = (req, res) => {
-	res.render('editAccount', {
-		title: 'Edit Account'
+	res.render('accountEdit', {
+		user: req.session.user
 	});
 };
+//POST
+
+
+
+
+
 
 const routes = [
 	{
@@ -68,17 +96,32 @@ const routes = [
 	{
 		uri: '/dashboard',
 		method: 'get',
-		handler: dashboard
+		handler: [requireSignedIn, dashboard]
 	},
 
 	{
 		uri: '/account/edit',
 		method: 'get',
-		handler: editAccount
+		handler: [requireSignedIn, editAccount]
+	},
+	{
+		uri: '/login',
+		method: 'post',
+		handler: loginPost
 	}
+
 ];
 
-module.exports = { logger, routes };
+const configure = options => {
+	app = options.app;
+	app.use(expressSession({
+		secret: process.env.EXPRESS_SESSION_SECRET,
+		saveUninitialized: true,
+		resave: true
+	}));
+}
+
+module.exports = { logger, routes, configure };
 
 /*Joe's Code Examples with me adding to them*/
 /*
