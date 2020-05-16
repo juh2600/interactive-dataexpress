@@ -6,10 +6,10 @@ block content
     form(id="loginForm" method="post" action="/login" onsubmit="submitForm()")
         div(id="usernameDiv")
             label(for="username") Username:
-            input(id="username" type="text")
+            input(id="username" type="text" name="username")
         div(id="passwordDiv")
             label(for="password") Password:
-            input(id="password" type="password")
+            input(id="password" type="password" name="password")
         p(class="errorMsg") Username or password is incorrect!
         input(type="submit" value="Login")
     script(src="/scripts/loginValidation.js")

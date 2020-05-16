@@ -25,7 +25,7 @@ block content
                 option(value="3") What street did you live on in third grade?
                 option(value="4") What is your oldest sibling's middle name?
             //- label(for="securityAnswer1") Answer:
-            input(type="text" id="securityAnswer1" value=user.questions[0].answer)
+            input(type="text" id="securityAnswer1" placeholder="nochange")
             p(class="errorMsg") Input cannot be empty
         div(id="securityQuestionDiv2")
             label(for="securityQuestion2") Security Question 2:
@@ -36,7 +36,7 @@ block content
                 option(value="3") What was the name of your first stuffed animal?
                 option(value="4") In what city or town did your mother and father meet?
             //- label(for="securityAnswer2") Answer:
-            input(type="text" id="securityAnswer2" value=user.questions[1].answer)
+            input(type="text" id="securityAnswer2" placeholder="nochange")
             p(class="errorMsg") Input cannot be empty
         div(id="securityQuestionDiv3")
             label(for="securityQuestion3") Security Question 3:
@@ -47,7 +47,7 @@ block content
                 option(value="3") In what city does your nearest sibling live?
                 option(value="4") In what city or town was your first job?
             //- label(for="securityAnswer3") Answer:
-            input(type="text" id="securityAnswer3" value=user.questions[2].answer)
+            input(type="text" id="securityAnswer3" placeholder="nochange")
             p(class="errorMsg") Input cannot be empty
         
         div(id="passwordsDiv")
