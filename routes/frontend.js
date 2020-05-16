@@ -62,6 +62,7 @@ const dashboard = (req, res) => {
 };
 
 
+// TODO implement
 const editAccount = (req, res) => {
 	res.render('accountEdit', {
 		session: req.session
