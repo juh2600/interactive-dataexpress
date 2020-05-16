@@ -20,15 +20,18 @@ const intercept = (req, res, next) => {
     next();
 };
 app.use(intercept);
-*/
 app.get('/', (req, res) => {
     console.log('You must be logged in.');
     res.send('You must be logged in.');
 });
+*/
 
 /*Body parser and a little interceptor usage*/
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 /*
 const checkAuth = (req, res, next) => {
     if(req.session.user && req.session.user.isAuthenicated) {
@@ -101,7 +104,7 @@ app.get("/dashboard", (req, res) => {
 */
 
 logger.info('Configuring routes...');
-let routeFiles = ['frontend', 'accounts'];
+let routeFiles = ['frontend', 'accounts', 'questions'];
 const routeManager = require('./routes/manager');
 routeFiles.forEach((file) => {
         logger.info(`Adding ${file} routes...`);
