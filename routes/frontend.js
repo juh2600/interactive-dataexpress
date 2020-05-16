@@ -16,19 +16,19 @@ const requireSignedIn = (req, res, next) => {
 // Public routes
 //GET
 const index = (req, res) => {
-	res.render('landing');
+	res.render('landing', { session: req.session });
 };
 
 const login = (req, res) => {    
-	res.render('login');
+	res.render('login', { session: req.session });
 };
 
 const signUp = (req, res) => {
-	res.render('signup');
+	res.render('signup', { session: req.session });
 };
 
 const logout = (req, res) => {
-	res.redirect('/');
+	res.redirect('/', { session: req.session });
 };
 //POST
 const loginPost = (req, res) => {
@@ -57,14 +57,14 @@ const loginPost = (req, res) => {
 //GET
 const dashboard = (req, res) => {
 	res.render('dashboard', {
-		user: req.session.user
+		session: req.session
 	});
 };
 
 
 const editAccount = (req, res) => {
 	res.render('accountEdit', {
-		user: req.session.user
+		session: req.session
 	});
 };
 //POST

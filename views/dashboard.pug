@@ -1,4 +1,4 @@
-extends signedIn
+extends layout
 
 block content
-    h1(id="title") Welcome #{user.username}
+    h1(id="title") Welcome #{session.user.username}

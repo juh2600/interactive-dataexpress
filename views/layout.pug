@@ -7,7 +7,10 @@ html
         link(href="/style.css" rel="stylesheet")
 
     body
-        block nav
+        if session && session.user && session.user.isAuthenticated
+            include signedInNav
+        else
+            include signedOutNav
         section(id="main")
             block content
     
