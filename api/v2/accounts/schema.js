@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('./validate');
 const { wrapErrorForMongoose } = require('../util');
 
-const securityQuestionAnswerPair = mongoose.Schema({
-	id: mongoose.Schema.Types.ObjectID,
-	answer: Number
-});
-
 const accountSchema = mongoose.Schema({
 	username: {
 		type: String,
@@ -19,10 +14,7 @@ const accountSchema = mongoose.Schema({
 
 	password: {
 		type: String,
-		required: [ validator.exist.password ]//,
-		// validate: {
-		// 	validator: wrapErrorForMongoose(validator.valid.password)
-		// }
+		required: [ validator.exist.password ]
 	},
 
 	email: {
@@ -41,24 +33,18 @@ const accountSchema = mongoose.Schema({
 		}
 	},
 
-	questions: {
+	answers: {
 
-		type: [{
-			type: securityQuestionAnswerPair,
-			required: [ validator.exist.question ],
-			validate: {
-				validator: wrapErrorForMongoose(validator.valid.question)
-			}
-		}],
+		type: [Number],
 
 		required: [
-			validator.exist.questions
+			validator.exist.answers
 		],
 		validate: {
-			validator: wrapErrorForMongoose(validator.valid.questions)
+			validator: wrapErrorForMongoose(validator.valid.answers)
 		}
 	}
 
 });
 
-module.exports = accountSchema;
+module.exports = mongoose.model('Accounts', accountSchema);

@@ -2,12 +2,12 @@ let logger = require('../../logger').get('API::Accounts');
 let dblogger = require('../../logger').get('API::Accounts::DB');
 const validator = require('./accounts/validate');
 const bcrypt = require('bcryptjs');
-const QuestionsAPI = require('./questions');
 require('dotenv').config();
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@thedataexpress-wuepb.mongodb.net/test?retryWrites=true&w=majority`, {
+
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_NAME}-wuepb.mongodb.net/test?retryWrites=true&w=majority`, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true
@@ -19,7 +19,8 @@ db.once('open', () => dblogger.info('Connected'));
 let Account, Accounts;
 const createDB = () => {
 	if(!db.models.hasOwnProperty('Accounts'))
-	Accounts = mongoose.model('Accounts', require('./accounts/schema'));
+		require('./accounts/schema')
+	Accounts = mongoose.models['Accounts'];
 	Account = Accounts; // link; sometimes Accounts makes sense, and sometimes Account makes sense
 };
 
@@ -30,47 +31,27 @@ const hashStuff = (accountDetails) => {
 };
 
 const create = async (accountDetails) => {
-	// Minimal input validation: ensure that all parameters are present
-	// Proper validation occurs in account schema (accountSchema.js)
-	// Just kidding; mongoose validation actin' wack, so we do it here
 	if (!accountDetails) throw `Missing account description`;
-	let params = [
-		'username',
-		'password',
-		'email',
-		'dob',
-		'questions'
-	];
+	let params = [ 'username', 'password', 'email', 'dob', 'answers' ];
 	if (accountDetails.dob && accountDetails.dob.constructor.name != 'Date')
 		accountDetails.dob = new Date(accountDetails.dob);
 	params.forEach((param) => {
 		if (!accountDetails[param]) throw `Missing parameter ${param}`;
 		validator.validate(param, accountDetails[param]);
 	});
-	if(!accountDetails.questions.forEach) throw `Questions need to be an array with length of at least ${process.env.MIN_SECURITY_QUESTIONS}`;
-	if(accountDetails.questions.length < process.env.MIN_SECURITY_QUESTIONS) throw `Not enough questions: expected at least ${process.env.MIN_SECURITY_QUESTIONS}; found ${accountDetails.questions.length}`;
-	accountDetails.questions.forEach((question) => {
-		validator.validate('question', question);
+	
+	if(!accountDetails.answers.forEach) throw `Answers need to be an array with length of at least ${process.env.ANSWER_COUNT}`;
+	if(accountDetails.answers.length < process.env.ANSWER_COUNT) throw `Not enough answers: expected at least ${process.env.ANSWER_COUNT}; found ${accountDetails.answers.length}`;
+	accountDetails.answers.forEach((answer) => {
+		validator.validate('answer', answer);
 	});
 
-	// accountDetails.password = bcrypt.hashSync(accountDetails.password, 10);
-	// for (let q in accountDetails.questions) {
-	// 	accountDetails.questions[q].answer = bcrypt.hashSync(accountDetails.questions[q].answer, 10);
-	// }
 	accountDetails = hashStuff(accountDetails);
 
 	return get(accountDetails.username).then((user) => {
 		if (user) throw `Username "${user.username}" is already taken`;
 		let account = new Account(accountDetails);
-		account.save((err) => {
-			// attempt to make error pretty, if we know what it is
-			if (err) {
-				// we don't know what the error is, so just mongo-barf
-				throw err;
-			}
-			// if there's no error, there's nothing to do
-		});
-		// if we got this far, then the user was created successfully. be happy
+		account.save((err) => { if (err) { throw err; } });
 		return true;
 	});
 
@@ -89,7 +70,8 @@ const get = async (username) => {
 		if (account) {
 			account.password = undefined;
 		}
-		return account.toObject();
+		if (account && account.toObject) return account.toObject();
+		return account;
 	});
 };
 
@@ -127,18 +109,15 @@ const checkPassword = async (username, password) => {
 		(err, account) => {
 			if (err) throw err;
 		}
-	).exec().then((account) => bcrypt.compareSync(password, account.password));
+	).exec().then((account) => {
+		if(!account) return false;
+		return bcrypt.compareSync(password, account.password);
+	});
 };
 
-const getSecurityQuestions = async (username) => {
+const getAnswers = async (username) => {
 	return get(username).then(async (account) => {
-		let qs = [];
-		for(let q in account.questions) {
-			await QuestionsAPI
-				.getOne(account.questions[q])
-				.then(q => { qs.push(q); });
-		}
-		return qs;
+		return account.answers;
 	});
 };
 
@@ -149,5 +128,5 @@ module.exports = {
 	update,
 	remove,
 	checkPassword,
-	getSecurityQuestions
+	getAnswers
 };

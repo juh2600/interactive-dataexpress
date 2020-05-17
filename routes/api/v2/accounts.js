@@ -5,7 +5,7 @@ const {respond, requirePresenceOfParameter} = require('../../util');
 
 const createAccount = (req, res) => {
 	let giveUp = false;
-	['username', 'password', 'email', 'dob', 'questions'].forEach((param) => {
+	['username', 'password', 'email', 'dob', 'answers'].forEach((param) => {
 		if(!requirePresenceOfParameter(req.body[param], param, res))
 			giveUp = true;
     });
@@ -43,19 +43,19 @@ const checkPassword = (req, res) => {
 
 const routes = [
     {
-        uri: '/api/v1/accounts/create',
+        uri: '/api/v2/accounts/create',
         method: 'post',
         handler: createAccount
     },
 
     {
-        uri: '/api/v1/accounts/update',
+        uri: '/api/v2/accounts/update',
         method: 'post',
         handler: updateAccount
     },
 
     {
-        uri: '/api/v1/accounts/authenticate/password',
+        uri: '/api/v2/accounts/authenticate/password',
         method: 'post',
         handler: checkPassword
 		}
