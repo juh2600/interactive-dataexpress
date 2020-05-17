@@ -29,7 +29,15 @@ const signUp = (req, res) => {
 
 // TODO implement
 const logout = (req, res) => {
-	res.redirect('/', { session: req.session });
+	
+	req.session.destroy( err => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            res.redirect('/');
+        }
+    })
 };
 
 const loginPost = (req, res) => {
@@ -89,6 +97,11 @@ const routes = [
 		uri: '/login',
 		method: 'get',
 		handler: login
+	},
+	{
+		uri: '/logout',
+		method: 'get',
+		handler: logout
 	},
 
 	{
