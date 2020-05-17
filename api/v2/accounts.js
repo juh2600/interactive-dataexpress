@@ -69,7 +69,8 @@ const get = async (username) => {
 		if (account) {
 			account.password = undefined;
 		}
-		return account.toObject();
+		if (account && account.toObject) return account.toObject();
+		return account;
 	});
 };
 
