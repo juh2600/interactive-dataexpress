@@ -149,18 +149,31 @@ const editAccPost = (req, res) => {
 	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
 		console.log(isOK);
 		if(isOK) {
-			Object.keys(req.body).forEach(key => {
-				if(!req.body[key])
-					delete req.body[key];
+			AccountsAPI.get(req.session.user.username).then(account => {
+				let answers = [];
+				req.body.answers = [req.body.answer1, req.body.answer2, req.body.answer3];
+				for(let i in req.body.answers) {
+					if(isNaN(parseInt(req.body.answers[i]))) answers.push(account.answers[i]);
+					else answers.push(parseInt(req.body.answers[i]));
+				}
+				Object.keys(req.body).forEach(key => {
+					if(!req.body[key])
+						delete req.body[key];
+				});
+				console.log(req.body);
+				AccountsAPI.update(req.session.user.username, req.body).then(isOK => {
+					if(req.body.username)
+						req.session.user.username = req.body.username;	
+					dashboard(req, res);
+				}).catch(err => {editAccount(req, res);});
+			
 			});
-			console.log(req.body);
-			AccountsAPI.update(req.session.user.username, req.body).then(isOK => {
-				if(req.body.username)
-					req.session.user.username = req.body.username;	
-				dashboard(req, res);
-			}).catch(err => {console.log(err)});
+		
 		}
-	}).catch(err => {console.log(err)});
+		else{
+			editAccount(req, res);
+		}
+	}).catch(err => {editAccount(req, res);});
 }
 
 
