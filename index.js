@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname+"/public")));
 
 
 logger.info('Configuring routes...');
-let routeFiles = ['frontend', `api/${API_VERSION}/accounts`, `api/${API_VERSION}/questions`];
+let routeFiles = ['frontend', `api/${process.env.API_VERSION}/accounts`, `api/${process.env.API_VERSION}/questions`];
 const routeManager = require('./routes/manager');
 routeFiles.forEach((file) => {
         logger.info(`Adding ${file} routes...`);
