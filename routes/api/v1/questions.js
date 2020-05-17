@@ -1,6 +1,6 @@
 const logger = require('logger').get('HTTP::APIv1::Questions');
-const QuestionsAPI = require('../api/v1/questions.js');
-const {respond, requirePresenceOfParameter} = require('./util');
+const QuestionsAPI = require('../../../api/v1/questions.js');
+const {respond, requirePresenceOfParameter} = require('../../util');
 
 const getOne = (req, res) => {
 	if(!requirePresenceOfParameter(req.params.question_id, 'question_id', res)) return;
