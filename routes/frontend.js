@@ -54,9 +54,8 @@ const signUp = (req, res) => {
 	res.render('signup', { session: req.session, lastVisited: lastVisited, failed: req.failed });
 };
 
-// TODO implement
+//GET route for logout. Redirects to landing page
 const logout = (req, res) => {
-
 	req.session.destroy( err => {
 		if(err) {
 			logger.error(err);
@@ -109,7 +108,7 @@ const dashboard = (req, res) => {
 };
 
 
-
+//GET route for account edit page. Must be logged in to see
 const editAccount = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedEditAccount) {
@@ -161,6 +160,7 @@ const internalErrorPage = (req, res) => {
 
 //POST
 
+//Post route for account edit form
 const editAccPost = (req, res) => {
 	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
 		if(isOK) {
@@ -193,7 +193,7 @@ const editAccPost = (req, res) => {
 	}).catch(err => {editAccount(req, res);});
 }
 
-
+//Post route for signup form
 const signupPost = (req, res) => {
 	let user = {
 		username: req.body.username,
