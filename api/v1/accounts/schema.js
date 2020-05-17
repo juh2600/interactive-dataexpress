@@ -21,8 +21,8 @@ const accountSchema = mongoose.Schema({
 		type: String,
 		required: [ validator.exist.password ]//,
 		// validate: {
-		// 	validator: wrapErrorForMongoose(validator.valid.password)
-		// }
+			// 	validator: wrapErrorForMongoose(validator.valid.password)
+			// }
 	},
 
 	email: {

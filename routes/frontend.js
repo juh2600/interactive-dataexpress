@@ -1,18 +1,20 @@
-const logger = require('logger').get('HTTP::Frontend');
+const logger = require('../logger').get('HTTP::Frontend');
 const expressSession = require('express-session');
 const AccountsAPI = require('../api/v2/accounts.js');
 const { respond, requirePresenceOfParameter } = require('./util');
-const cookieParser = require("cookie-parser"); 
+const cookieParser = require("cookie-parser");
 
 
 let app = null;
 
+let generic500Response = 'An internal error has occurred. Please try again later.<hr>Try what again later? Dunno. How much later? Couldn\'t tell ya. But just the presence of those words bumps the whole site up a few enterprise-grade points.';
+
 const requireSignedIn = (req, res, next) => {
-    if(req.session.user && req.session.user.isAuthenticated) {
-        next();
-    } else {
-        res.redirect("/");
-    }
+	if(req.session.user && req.session.user.isAuthenticated) {
+		next();
+	} else {
+		res.redirect("/");
+	}
 }
 
 const getCurrentDate = () => {
@@ -22,7 +24,6 @@ const getCurrentDate = () => {
 
 // Public routes
 //GET
-//GET route for index/landing page
 const index = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedIndex)
@@ -31,44 +32,41 @@ const index = (req, res) => {
 		lastVisited = "Never";
 	res.cookie("lastVisitedIndex", getCurrentDate(), {maxAge: 9999999999});
 	res.render('landing', { session: req.session, lastVisited: lastVisited });
-	
 };
 
-//GET route for login page
-const login = (req, res) => {   
+const login = (req, res) => {
 	let lastVisited;
-	if(req.cookies.lastVisitedLogin) 
+	if(req.cookies.lastVisitedLogin)
 		lastVisited = req.cookies.lastVisitedLogin;
-	else 
+	else
 		lastVisited = "Never";
-	res.cookie("lastVisitedLogin", getCurrentDate(), {maxAge: 9999999999}); 
+	res.cookie("lastVisitedLogin", getCurrentDate(), {maxAge: 9999999999});
 	res.render('login', { session: req.session, failed: req.failed, lastVisited: lastVisited});
 };
 
-//GET route for signup page
 const signUp = (req, res) => {
 	let lastVisited;
-	if(req.cookies.lastVisitedSignup) 
+	if(req.cookies.lastVisitedSignup)
 		lastVisited = req.cookies.lastVisitedSignup;
-	else 
+	else
 		lastVisited = "Never";
-	res.cookie("lastVisitedSignup", getCurrentDate(), {maxAge: 9999999999}); 
-	res.render('signup', { session: req.session, lastVisited: lastVisited });
+	res.cookie("lastVisitedSignup", getCurrentDate(), {maxAge: 9999999999});
+	res.render('signup', { session: req.session, lastVisited: lastVisited, failed: req.failed });
 };
 
-//GET route for logout. Redirects to landing page
+// TODO implement
 const logout = (req, res) => {
+
 	req.session.destroy( err => {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            res.redirect('/');
-        }
-    })
+		if(err) {
+			logger.error(err);
+		}
+		else {
+			res.redirect('/');
+		}
+	})
 };
 
-//Post route for login form
 const loginPost = (req, res) => {
 	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
 		if(isOK) {
@@ -79,8 +77,9 @@ const loginPost = (req, res) => {
 			throw 'Username/password mismatch'; // this doesn't get used anywhere, but it tells us in code what's going on
 		}
 	}).catch(err => {
-			req.failed = true;
-			login(req, res);
+		logger.error(err);
+		req.failed = true;
+		login(req, res);
 	});
 
 }
@@ -94,8 +93,6 @@ const newSession = req => {
 }
 // Private routes
 //GET
-
-//GET route for dashboard page. Must be logged in to see
 const dashboard = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedDashboard) {
@@ -104,7 +101,7 @@ const dashboard = (req, res) => {
 	else {
 		lastVisited = "Never";
 	}
-	res.cookie("lastVisitedDashboard", getCurrentDate(), {maxAge: 9999999999}); 
+	res.cookie("lastVisitedDashboard", getCurrentDate(), {maxAge: 9999999999});
 	res.render('dashboard', {
 		session: req.session,
 		lastVisited: lastVisited
@@ -112,7 +109,7 @@ const dashboard = (req, res) => {
 };
 
 
-//GET route for account edit page. Must be logged in to see
+
 const editAccount = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedEditAccount) {
@@ -121,38 +118,51 @@ const editAccount = (req, res) => {
 	else {
 		lastVisited = "Never";
 	}
-	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999}); 
+	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999});
 	AccountsAPI.get(req.session.user.username).then(account => {
-		//console.log(account);
 		let user = Object.assign({}, account, {dob: account.dob.toISOString().match(/^.*(?=T)/)[0]});
-		//console.log(user);
 		res.render('accountEdit', {
 			session: req.session,
 			user: user,
 			lastVisited: lastVisited
 		});
 	}).catch(err => {
-		console.log(err);
+		logger.error(err);
+		internalErrorPage(req, res);
 	});
-	
+
 };
 
 // Generic error page
 const errorPage = (err, req, res, next) => {
 	if(err) {
-		res.render('err', {
+		res.render('error', {
+			error: err,
 			code: res.statusCode,
-			message: res.statusMessage
+			message: res.statusMessage,
+			note: err.note
 		});
 	} else next();
 };
 
+const notFoundPage = (req, res, next) => {
+	res.statusCode = 404;
+	res.statusMessage = 'Not Found';
+	err = {note: 'The requested resource could not be located.'};
+	errorPage(err, req, res, null);
+};
+
+const internalErrorPage = (req, res) => {
+	res.statusCode = 500;
+	res.statusMessage = 'Internal Server Error';
+	err = {note: generic500Response};
+	errorPage({note:generic500Response}, req, res, null);
+};
+
 //POST
-//Post route for account edit form
+
 const editAccPost = (req, res) => {
-	console.log(req.body);
 	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
-		console.log(isOK);
 		if(isOK) {
 			AccountsAPI.get(req.session.user.username).then(account => {
 				let answers = [];
@@ -165,15 +175,17 @@ const editAccPost = (req, res) => {
 					if(!req.body[key])
 						delete req.body[key];
 				});
-				console.log(req.body);
 				AccountsAPI.update(req.session.user.username, req.body).then(isOK => {
-					if(req.body.username)
-						req.session.user.username = req.body.username;	
-					dashboard(req, res);
-				}).catch(err => {editAccount(req, res);});
-			
+					if(isOK) {
+						if(req.body.username)
+							req.session.user.username = req.body.username;
+						dashboard(req, res);
+					} else editAccount(req, res);
+				}).catch(err => {
+					logger.error(err);
+					editAccount(req, res);
+				});
 			});
-		
 		}
 		else{
 			editAccount(req, res);
@@ -181,7 +193,7 @@ const editAccPost = (req, res) => {
 	}).catch(err => {editAccount(req, res);});
 }
 
-//Post route for signup form
+
 const signupPost = (req, res) => {
 	let user = {
 		username: req.body.username,
@@ -192,8 +204,20 @@ const signupPost = (req, res) => {
 	}
 
 	AccountsAPI.create(user).then(isOK => {
-		login(req, res);
-	}).catch(err => {console.log(err)});
+		if(isOK) {
+			login(req, res);
+		} else {
+			signUp(req, res);
+		}
+	}).catch(err => {
+		if(/is already taken/i.test(err)) {
+			req.failed = {reason: err};
+			signUp(req, res);
+			return;
+		}
+		logger.error(err);
+		internalErrorPage(req, res);
+	});
 }
 
 
@@ -238,23 +262,28 @@ const routes = [
 		method: 'post',
 		handler: loginPost
 	},
+
 	{
 		uri: '/account/edit',
 		method: 'post',
 		handler: editAccPost
 	},
+
 	{
 		uri: '/signup',
 		method: 'post',
 		handler: signupPost
-	}
-	
-	//,
+	},
 
-	// {
-	// 	method: 'use',
-	// 	handler: errorPage
-	// }
+	{
+		method: 'use',
+		handler: notFoundPage
+	},
+
+	{
+		method: 'use',
+		handler: errorPage
+	}
 
 ];
 

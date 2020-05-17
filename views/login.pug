@@ -2,14 +2,14 @@ extends layout
 
 
 block content
-    h1(id="title") Login
-    form(id="loginForm" method="post" action="/login" onsubmit="submitForm()")
-        div(id="usernameDiv")
-            label(for="username") Username:
-            input(id="username" type="text" name="username")
-        div(id="passwordDiv")
-            label(for="password") Password:
-            input(id="password" type="password" name="password")
-        if failed
-            p(class="errorMsg") Username or password is incorrect!
-        input(type="submit" value="Login")
+	h1#title Login
+	form#loginForm(method="post", action="/login", onsubmit="submitForm()")
+		div#usernameDiv
+			label(for="username") Username:
+			input#username(type="text", name="username")
+		div#passwordDiv
+			label(for="password") Password:
+			input#password(type="password", name="password")
+		if failed
+			p.errorMsg Username or password is incorrect!
+		input(type="submit", value="Login")

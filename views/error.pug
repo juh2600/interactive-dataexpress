@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	if code && message
+		h1#title #{code} #{message}
+	else
+		h1#title Error
+	if note
+		p !{note}
+	else
+		p=error

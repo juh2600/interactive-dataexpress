@@ -1,17 +1,17 @@
-nav(id="signedIn")
-		div(class="navBtn")
-				a(href="/dashboard") Dashboard
-		div(id="account")
-				p=session.user.username
-				div(id="accountBtn")
-						div
-								div(class="menuBar top")
-								div(class="menuBar mid")
-								div(class="menuBar bot")
-div(id="screen")
-div(id="slider")
-		div(id="sliderContent")
-				div(id="sliderEdit" class="sliderOption")
-						a(href="/account/edit") Edit Account
-		div(id="sliderLogout" class="sliderOption")
-				a(href="/logout") Logout
+nav#signedIn
+	div.navBtn
+		a(href="/dashboard") Dashboard
+	div#account
+		p=session.user.username
+		div#accountBtn
+			div
+				div.menuBar.top
+				div.menuBar.mid
+				div.menuBar.bot
+div#screen
+div#slider
+	div#sliderContent
+		div#sliderEdit.sliderOption
+			a(href="/account/edit") Edit Account
+	div#sliderLogout.sliderOption
+		a(href="/logout") Logout

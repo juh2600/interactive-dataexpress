@@ -1,14 +1,9 @@
 require('dotenv').config();
 
-const test = (regex) => (x) => regex.test(x);
+// We can't just leave /.../.test as a method reference for some reason, so instead we wrap it in a lambda.
+	const test = (regex) => (x) => regex.test(x);
 
 const params = {
-	// username: {
-	// 	length: {
-	// 		min: 3,
-	// 		max: 32
-	// 	}
-	// },
 	username: [
 		{
 			desc: "length of between three and thirty-two characters",
@@ -45,7 +40,11 @@ const params = {
 	]
 };
 
-const isNotEmpty = (x) => { return !!x; }
+
+// Round off truthy values to true and falsy values to false.
+	// This will catch things like 0, '', null, undefined, and false.
+	// It will not identify [] as empty.
+	const isNotEmpty = (x) => { return !!x; }
 
 const exist = {
 	username: isNotEmpty,

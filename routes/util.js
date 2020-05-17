@@ -2,7 +2,7 @@ const makeSearchable = (object, list_key) => {
 	object.get = (key) => {
 		let out = object[list_key].filter((product) => { return product[object.primary_key] === key; })[0];
 		if(out) return out;
-//		throw `Entry ${key} does not exist`;
+		//		throw `Entry ${key} does not exist`;
 	};
 	return object;
 };

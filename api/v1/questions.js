@@ -45,7 +45,7 @@ const create = (questionDetails) => {
 };
 
 // returns a not-promise:
-//   https://mongoosejs.com/docs/queries.html#queries-are-not-promises
+	//   https://mongoosejs.com/docs/queries.html#queries-are-not-promises
 // just treat it like one; i.e.:
 //   get('xXx_EdgyName_xXx').then(user => {})
 const getOne = (id) => {
@@ -70,25 +70,25 @@ const getBank = (bank) => {
 };
 
 /*
-const update = (username, details) => {
-	Object.keys(details).forEach((key) => {
-		try {
-			validator.validate(key, details[key]);
-		} catch (err) {
-			if (/Method not found/i.test(err))
-				delete details[key];
-			else
-				throw err;
-		}
-	});
+	const update = (username, details) => {
+		Object.keys(details).forEach((key) => {
+			try {
+				validator.validate(key, details[key]);
+			} catch (err) {
+				if (/Method not found/i.test(err))
+					delete details[key];
+				else
+					throw err;
+			}
+		});
 
-	// TODO validate password-related things, however we decide to handle that
+		// TODO validate password-related things, however we decide to handle that
 
-	return Questions.updateOne(
-		{ "username": username },
-		details
-	);
-};
+		return Questions.updateOne(
+			{ "username": username },
+			details
+		);
+	};
 
 const remove = (username) => {
 	return Questions.deleteOne(
@@ -98,7 +98,7 @@ const remove = (username) => {
 
 */
 
-createDB();
+	createDB();
 module.exports = {
 	create,
 	getOne,

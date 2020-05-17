@@ -4,11 +4,11 @@ const test = (regex) => (x) => regex.test(x);
 
 const params = {
 	// username: {
-	// 	length: {
-	// 		min: 3,
-	// 		max: 32
-	// 	}
-	// },
+		// 	length: {
+			// 		min: 3,
+			// 		max: 32
+			// 	}
+		// },
 	username: [
 		{
 			desc: "length of between three and thirty-two characters",

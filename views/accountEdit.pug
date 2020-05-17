@@ -1,53 +1,53 @@
 extends layout
 
 block content
-    h1(id="title") Edit Account
-    form(id="dataForm" method="post" action="/account/edit" data-method="edit" onsubmit="return submitForm()")
-        p(id="headErrMsg" class="errorMsg hidden" ) Please fill out the following fields:
-        div(id="usernameDiv")
-            label(for="username") Username: 
-            input(type="text" id="username" value=user.username name="username")
-            p(class="errorMsg hidden" ) Must be between 3 and 32 characters
-        div(id="emailDiv")
-            label(for="email") Email: 
-            input(type="email" id="email" value=user.email name="email")
-            p(class="errorMsg hidden" ) Must be valid email
-        div(id="dobDiv")
-            label(for="dob") Birthdate: #{user.dob}
-            input(type="date" id="dob" value=user.dob name="dob")
-            p(class="errorMsg hidden" ) Must be 13 or older
-        div(id="securityQuestionDiv1")
-            label(for="securityQuestion1") When is Joe's birthday?:
-            select(id="securityQuestion1" data-qid=user.answers[0] name="answer1")
-                option(value="0") Jan 09 1998
-                option(value="1") Oct 03 1998
-                option(value="2") Nov 11 1999
-                option(value="3") May 14 1997
-        div(id="securityQuestionDiv2")
-            label(for="securityQuestion2") When was the US Constitution signed?:
-            select(id="securityQuestion2" data-qid=user.answers[1] name="answer2")
-                option(value="0") 1783
-                option(value="1") 1776
-                option(value="2") 1787
-                option(value="3") 1912
-        div(id="securityQuestionDiv3")
-            label(for="securityQuestion3") Who is the best Disney Princess?:
-            select(id="securityQuestion3" data-qid=user.answers[2] name="answer3")
-                option(value="0") Mulan
-                option(value="1") Rapunzel
-                option(value="2") Ariel
-                option(value="3") Cinderella
-        
-        div(id="passwordsDiv")
-            div(id="newPasswordDiv")
-                label(for="newPassword") New Password: 
-                input(type="password" id="newPassword" name="newPassword") 
-                p(class="errorMsg hidden" ) Must have 1 number, 1 capital and be at least 8 characters long
-            hr
-            div(id="oldPasswordDiv")
-                label(for="oldPassword") Enter password to update: 
-                input(type="password" id="oldPassword" name="password")
-                p(class="errorMsg hidden" ) Incorrect Password
-        input(type="submit" value="Update Account")
-    script(src="/scripts/accountEditPage.js")
-    script(src="/scripts/formValidation.js")
+	h1#title Edit Account
+	form#dataForm(method="post", action="/account/edit", data-method="edit", onsubmit="return submitForm()")
+		p#headErrMsg.errorMsg.hidden Please fill out the following fields:
+		div#usernameDiv
+			label(for="username") Username:
+			input#username(type="text", value=user.username name="username")
+			p.errorMsg.hidden Must be between 3 and 32 characters
+		div#emailDiv
+			label(for="email") Email:
+			input#email(type="email", value=user.email, name="email")
+			p.errorMsg.hidden Must be valid email
+		div#dobDiv
+			label(for="dob") Birthdate: #{user.dob}
+			input#dob(type="date", value=user.dob name="dob")
+			p.errorMsg.hidden Must be 13 or older
+		div#securityQuestionDiv1
+			label(for="securityQuestion1") When is Joe's birthday?
+			select#securityQuestion1(data-qid=user.answers[0], name="answer1")
+				option(value="0") Jan 09 1998
+				option(value="1") Oct 03 1998
+				option(value="2") Nov 11 1999
+				option(value="3") May 14 1997
+		div#securityQuestionDiv2
+			label(for="securityQuestion2") When was the US Constitution signed?
+			select#securityQuestion2(data-qid=user.answers[1], name="answer2")
+				option(value="0") 1783
+				option(value="1") 1776
+				option(value="2") 1787
+				option(value="3") 1912
+		div#securityQuestionDiv3
+			label(for="securityQuestion3") Who is the best Disney Princess?
+			select#securityQuestion3(data-qid=user.answers[2], name="answer3")
+				option(value="0") Mulan
+				option(value="1") Rapunzel
+				option(value="2") Ariel
+				option(value="3") Cinderella
+
+		div#passwordsDiv
+			div#newPasswordDiv
+				label(for="newPassword") New Password:
+				input#newPassword(type="password", name="newPassword")
+				p.errorMsg.hidden Must have 1 number, 1 capital and be at least 8 characters long
+			hr
+			div#oldPasswordDiv
+				label(for="oldPassword") Enter password to update:
+				input#oldPassword(type="password", name="password")
+				p.errorMsg.hidden Incorrect Password
+		input(type="submit", value="Update Account")
+	script(src="/scripts/accountEditPage.js")
+	script(src="/scripts/formValidation.js")

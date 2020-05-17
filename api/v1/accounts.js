@@ -56,8 +56,8 @@ const create = async (accountDetails) => {
 
 	// accountDetails.password = bcrypt.hashSync(accountDetails.password, 10);
 	// for (let q in accountDetails.questions) {
-	// 	accountDetails.questions[q].answer = bcrypt.hashSync(accountDetails.questions[q].answer, 10);
-	// }
+		// 	accountDetails.questions[q].answer = bcrypt.hashSync(accountDetails.questions[q].answer, 10);
+		// }
 	accountDetails = hashStuff(accountDetails);
 
 	return get(accountDetails.username).then((user) => {
@@ -114,8 +114,8 @@ const update = async (username, details) => {
 	// TODO validate password-related things, however we decide to handle that
 	// accountDetails.password = bcrypt.hashSync(accountDetails.password, 10);
 	// for (let q in accountDetails.questions) {
-	// 	accountDetails.questions[q].answer = bcrypt.hashSync(accountDetails.questions[q].answer, 10);
-	// }
+		// 	accountDetails.questions[q].answer = bcrypt.hashSync(accountDetails.questions[q].answer, 10);
+		// }
 	details = hashStuff(details);
 
 	return Accounts.updateOne(
@@ -146,10 +146,10 @@ const checkSecurityQuestion = async (username, question_id, answer) => {
 			if (err) throw err;
 		}
 	).exec().then((account) => {
-			question = account.questions.filter(q => q.id == question_id);
-			if (question.length == 0) throw `User has not answered this question`;
-			question = question[0];
-			return bcrypt.compareSync(answer, question.answer);
+		question = account.questions.filter(q => q.id == question_id);
+		if (question.length == 0) throw `User has not answered this question`;
+		question = question[0];
+		return bcrypt.compareSync(answer, question.answer);
 	});
 };
 
