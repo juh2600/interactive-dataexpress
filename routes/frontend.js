@@ -116,11 +116,16 @@ const editAccount = (req, res) => {
 	}
 	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999}); 
 	AccountsAPI.get(req.session.user.username).then(account => {
+		console.log(account);
+		let user = Object.assign({}, account, {dob: account.dob.toISOString().match(/^.*(?=T)/)[0]});
+		console.log(user);
 		res.render('accountEdit', {
 			session: req.session,
-			user: account,
+			user: user._doc,
 			lastVisited: lastVisited
 		});
+	}).catch(err => {
+		console.log(err);
 	});
 	
 };
@@ -178,12 +183,12 @@ const routes = [
 		uri: '/login',
 		method: 'post',
 		handler: loginPost
-	},
+	}//,
 
-	{
-		method: 'use',
-		handler: errorPage
-	}
+	// {
+	// 	method: 'use',
+	// 	handler: errorPage
+	// }
 
 ];
 

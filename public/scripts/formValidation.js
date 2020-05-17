@@ -2,9 +2,6 @@ let form = [
     {id: "username", error: true},
     {id: "email", error: true},
     {id: "dob", error: true},
-    {id: "securityAnswer1", error: true},
-    {id: "securityAnswer2", error: true},
-    {id: "securityAnswer3", error: true}
 ]
 
 const typeOfForm = document.getElementById("dataForm").dataset.method;
@@ -42,7 +39,7 @@ const hasError = () => {
         }
     }
     if(errorTotal > 0) {
-        document.getElementById("headErrMsg").style.visibility = "visible";
+        document.getElementById("headErrMsg").classList.remove("hidden");
         return true;
     }
     return false;
@@ -74,11 +71,11 @@ const changeError = (id, value) => {
 }
 
 const showErrorText = target => {
-    target.parentNode.lastElementChild.style.visibility = "visible";
+    target.parentNode.lastElementChild.classList.remove("hidden");
 }
 
 const hideErrorText = target => {
-    target.parentNode.lastElementChild.style.visibility = "hidden";
+    target.parentNode.lastElementChild.classList.add("hidden");
 }
 
 

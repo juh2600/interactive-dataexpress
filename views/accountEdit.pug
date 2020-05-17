@@ -3,19 +3,19 @@ extends layout
 block content
     h1(id="title") Edit Account
     form(id="dataForm" method="post" action="/account/edit" data-method="edit" onsubmit="return submitForm()")
-        p(id="headErrMsg" class="errorMsg") Please fill out the following fields:
+        p(id="headErrMsg" class="errorMsg hidden" ) Please fill out the following fields:
         div(id="usernameDiv")
             label(for="username") Username: 
             input(type="text" id="username" value=user.username)
-            p(class="errorMsg") Must be between 3 and 32 characters
+            p(class="errorMsg hidden" ) Must be between 3 and 32 characters
         div(id="emailDiv")
             label(for="email") Email: 
             input(type="email" id="email" value=user.email)
-            p(class="errorMsg") Must be valid email
+            p(class="errorMsg hidden" ) Must be valid email
         div(id="dobDiv")
-            label(for="dob") Birthdate: 
+            label(for="dob") Birthdate: #{user.dob}
             input(type="date" id="dob" value=user.dob)
-            p(class="errorMsg") Must be 13 or older
+            p(class="errorMsg hidden" ) Must be 13 or older
         div(id="securityQuestionDiv1")
             label(for="securityQuestion1") When is Joe's birthday?:
             select(id="securityQuestion1" data-qid=user.questions[0].id)
@@ -43,11 +43,11 @@ block content
             div(id="newPasswordDiv")
                 label(for="newPassword") New Password: 
                 input(type="password" id="newPassword")
-                p(class="errorMsg") Must have 1 number, 1 capital and be at least 8 characters long
+                p(class="errorMsg hidden" ) Must have 1 number, 1 capital and be at least 8 characters long
             div(id="oldPasswordDiv")
                 label(for="oldPassword") Old Password: 
                 input(type="password" id="oldPassword")
-                p(class="errorMsg") Incorrect Password
+                p(class="errorMsg hidden" ) Incorrect Password
             hr
         input(type="submit" value="Update Account")
     script(src="/scripts/accountEditPage.js")
