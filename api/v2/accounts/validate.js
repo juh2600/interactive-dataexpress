@@ -52,8 +52,8 @@ const exist = {
 	password: isNotEmpty,
 	email: isNotEmpty,
 	dob: isNotEmpty,
-	questions: (qs) => { return isNotEmpty(qs) && qs.toString() != [].toString() && qs.forEach; },
-	question: isNotEmpty
+	answers: (as) => { return isNotEmpty(as) && as.toString() != [].toString() && as.forEach; },
+	answer: isNotEmpty
 };
 
 const valid = {
@@ -84,14 +84,12 @@ const valid = {
 		return true;
 	},
 
-	questions: (qs) => {
+	answers: (as) => {
 		return true;
 	},
 
-	question: (q) => {
-		// FIXME ensure that id exists and is a question
-		return isNotEmpty(q.answer);
-		return isNotEmpty(q.id) && isNotEmpty(q.answer);
+	answer: (a) => {
+		return true;
 	}
 };
 
