@@ -19,7 +19,8 @@ db.once('open', () => dblogger.info('Connected'));
 let Account, Accounts;
 const createDB = () => {
 	if(!db.models.hasOwnProperty('Accounts'))
-	Accounts = mongoose.model('Accounts', require('./accounts/schema'));
+		require('./accounts/schema')
+	Accounts = mongoose.models['Accounts'];
 	Account = Accounts; // link; sometimes Accounts makes sense, and sometimes Account makes sense
 };
 
@@ -108,7 +109,10 @@ const checkPassword = async (username, password) => {
 		(err, account) => {
 			if (err) throw err;
 		}
-	).exec().then((account) => bcrypt.compareSync(password, account.password));
+	).exec().then((account) => {
+		if(!account) return false;
+		return bcrypt.compareSync(password, account.password);
+	});
 };
 
 const getAnswers = async (username) => {

@@ -1,6 +1,6 @@
 const logger = require('logger').get('HTTP::Frontend');
 const expressSession = require('express-session');
-const AccountsAPI = require('../api/v1/accounts.js');
+const AccountsAPI = require('../api/v2/accounts.js');
 const { respond, requirePresenceOfParameter } = require('./util');
 
 let app = null;
