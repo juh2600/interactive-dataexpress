@@ -1,10 +1,11 @@
 {
   "name": "dataexpress",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "MTM282A: Interactive Web Dev: Lab: The Data Express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "logger": "github:josephreed2600/logger#master",
     "mongoose": "^5.9.12",
     "pug": "^2.0.4"
   }
