@@ -18,15 +18,17 @@ const addPasswordsToForm = () => {
         form.push({id: "confirmPassword", error: true});
     }
     else {
-        form.push({id: "newPassword", error: true});
-        form.push({id: "oldPassword", error: true});
+        for(let i = 0; i < form.length; i++) {
+            form[i].error = false;
+        }
+        form.push({id: "newPassword", error: false});
+        form.push({id: "oldPassword", error: false});
     }
 }
 
 
 
 const submitForm = () => {
-    console.log("Submit form");
     return !(hasError());
  }
 
@@ -62,6 +64,13 @@ const setGreen = target => {
     hideErrorText(target);
 }
 
+const clearColor = target => {
+    document.getElementById(target.id).classList.remove("red");
+    document.getElementById(target.id).classList.remove("green");
+    changeError(target.id, false);
+    hideErrorText(target);
+}
+
 const changeError = (id, value) => {
     for(let i = 0; i < form.length; i++) {
         if(form[i].id == id) {
@@ -81,6 +90,7 @@ const hideErrorText = target => {
 
 
 const inputHandler = evt => {
+    
     switch(evt.target.id) {
         case "username":
             validateLength(evt.target, 3, 32);
@@ -94,15 +104,18 @@ const inputHandler = evt => {
         case "password":
             validatePasswordConfirmation();
         case "newPassword":
-            validatePassword(evt.target);
+            if(evt.target.value.length == 0 && typeOfForm == "edit") {
+                clearColor(evt.target);
+            }
+            else{
+                validatePassword(evt.target);
+            }
             break;
         case "confirmPassword":
             validatePasswordConfirmation();
             break;
-        case "oldPassword":
-            validateOldPassword(evt.target);
-            break;
     }
+    
     
 }
 
@@ -121,7 +134,6 @@ const validateDate = target => {
     let inputDate = Date.parse(input);
     let ageLimit = new Date();
     ageLimit.setFullYear(ageLimit.getFullYear()-13);
-    console.log(ageLimit);
     if(inputDate < ageLimit) {
         setGreen(target);
     }
@@ -164,9 +176,6 @@ const validatePasswordConfirmation = () => {
     }
 }
 
-const validateOldPassword = target => {
-    let input = document.getElementById(target.id).value;
-}
 
 
 const setEventListeners = () => {

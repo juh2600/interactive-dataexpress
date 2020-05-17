@@ -69,10 +69,7 @@ const logout = (req, res) => {
 const loginPost = (req, res) => {
 	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
 		if(isOK) {
-			req.session.user = {
-				isAuthenticated: true,
-				username: req.body.username
-			}
+			newSession(req);
 			res.redirect("/dashboard");
 		}
 		else {
@@ -86,7 +83,12 @@ const loginPost = (req, res) => {
 }
 
 
-
+const newSession = req => {
+	req.session.user = {
+		isAuthenticated: true,
+		username: req.body.username
+	}
+}
 // Private routes
 //GET
 const dashboard = (req, res) => {
@@ -105,7 +107,7 @@ const dashboard = (req, res) => {
 };
 
 
-// TODO implement
+
 const editAccount = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedEditAccount) {
@@ -116,12 +118,12 @@ const editAccount = (req, res) => {
 	}
 	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999}); 
 	AccountsAPI.get(req.session.user.username).then(account => {
-		console.log(account);
+		//console.log(account);
 		let user = Object.assign({}, account, {dob: account.dob.toISOString().match(/^.*(?=T)/)[0]});
-		console.log(user);
+		//console.log(user);
 		res.render('accountEdit', {
 			session: req.session,
-			user: user._doc,
+			user: user,
 			lastVisited: lastVisited
 		});
 	}).catch(err => {
@@ -129,7 +131,6 @@ const editAccount = (req, res) => {
 	});
 	
 };
-
 
 // Generic error page
 const errorPage = (err, req, res, next) => {
@@ -141,6 +142,41 @@ const errorPage = (err, req, res, next) => {
 	} else next();
 };
 
+//POST
+
+const editAccPost = (req, res) => {
+	console.log(req.body);
+	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
+		console.log(isOK);
+		if(isOK) {
+			Object.keys(req.body).forEach(key => {
+				if(!req.body[key])
+					delete req.body[key];
+			});
+			console.log(req.body);
+			AccountsAPI.update(req.session.user.username, req.body).then(isOK => {
+				if(req.body.username)
+					req.session.user.username = req.body.username;	
+				dashboard(req, res);
+			}).catch(err => {console.log(err)});
+		}
+	}).catch(err => {console.log(err)});
+}
+
+
+const signupPost = (req, res) => {
+	let user = {
+		username: req.body.username,
+		password: req.body.password,
+		email: req.body.email,
+		dob: req.body.dob,
+		answers: [req.body.answer1, req.body.answer2, req.body.answer3]
+	}
+
+	AccountsAPI.create(user).then(isOK => {
+		login(req, res);
+	}).catch(err => {console.log(err)});
+}
 
 
 const routes = [
@@ -183,7 +219,19 @@ const routes = [
 		uri: '/login',
 		method: 'post',
 		handler: loginPost
-	}//,
+	},
+	{
+		uri: '/account/edit',
+		method: 'post',
+		handler: editAccPost
+	},
+	{
+		uri: '/signup',
+		method: 'post',
+		handler: signupPost
+	}
+	
+	//,
 
 	// {
 	// 	method: 'use',
