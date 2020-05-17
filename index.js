@@ -1,6 +1,9 @@
+const package = require('./package.json');
+console.log(`Starting ${package.name} v${package.version}`);
+process.env.NODE_ENV = 'production'; // this will cause a warning from express-session; it's ok
+
 const logger = require('./logger').get('main')
 const express = require("express");
-const pug = require("pug");
 const path = require("path");
 require('dotenv').config();
 
@@ -8,7 +11,6 @@ const app = express();
 
 /*Body parser and a little interceptor usage*/
 const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({extended: false});
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
