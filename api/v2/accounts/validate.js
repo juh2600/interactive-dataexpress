@@ -7,7 +7,7 @@ const params = {
 	username: [
 		{
 			desc: "length of between three and thirty-two characters",
-			test: test(/.{3,32}/)
+			test: test(/^.{3,32}$/)
 		},
 
 		{
@@ -19,7 +19,7 @@ const params = {
 	password: [
 		{
 			desc: "length of between eight and sixty-four characters",
-			test: test(/.{8,64}/)
+			test: test(/^.{8,64}$/)
 		},
 
 		{
