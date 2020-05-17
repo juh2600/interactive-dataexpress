@@ -20,7 +20,7 @@ const index = (req, res) => {
 };
 
 const login = (req, res) => {    
-	res.render('login', { session: req.session });
+	res.render('login', { session: req.session, failed: req.failed});
 };
 
 const signUp = (req, res) => {
@@ -32,7 +32,6 @@ const logout = (req, res) => {
 	res.redirect('/', { session: req.session });
 };
 
-// FIXME redirect back to login page on failure, with message
 const loginPost = (req, res) => {
 	requirePresenceOfParameter(req.body.username, "username", res);
 	requirePresenceOfParameter(req.body.password, "password", res);
@@ -45,7 +44,9 @@ const loginPost = (req, res) => {
 			res.redirect("/dashboard");
 		}
 		else {
-			res.redirect("/");
+			req.failed = true;
+			//res.redirect("/login");
+			login(req, res);
 		}
 	}).catch(err => {
 		respond(500, `Error while logging in: ${err}`, res);

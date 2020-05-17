@@ -10,6 +10,7 @@ block content
         div(id="passwordDiv")
             label(for="password") Password:
             input(id="password" type="password" name="password")
-        p(class="errorMsg") Username or password is incorrect!
+        if failed
+            p(class="errorMsg") Username or password is incorrect!
         input(type="submit" value="Login")
     script(src="/scripts/loginValidation.js")
