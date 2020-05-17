@@ -35,6 +35,6 @@ logger.info('Configured routes.');
 
 
 
-
+logger.info(`Listening on port ${process.env.PORT}`);
 app.listen(process.env.PORT);
 
