@@ -2,6 +2,7 @@ const logger = require('./logger').get('main')
 const express = require("express");
 const pug = require("pug");
 const path = require("path");
+require('dotenv').config();
 
 const app = express();
 

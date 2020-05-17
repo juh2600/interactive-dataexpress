@@ -18,6 +18,7 @@ db.once('open', () => dblogger.info('Connected'));
 
 let Account, Accounts;
 const createDB = () => {
+	if(!db.models.hasOwnProperty('Accounts'))
 	Accounts = mongoose.model('Accounts', require('./accounts/schema'));
 	Account = Accounts; // link; sometimes Accounts makes sense, and sometimes Account makes sense
 };
