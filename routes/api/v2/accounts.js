@@ -1,4 +1,4 @@
-const API_VERSION = 'v1'
+const API_VERSION = 'v2'
 const logger = require('logger').get(`HTTP::API${API_VERSION}::Accounts`);
 const AccountsAPI = require(`../../../api/${API_VERSION}/accounts.js`);
 const {respond, requirePresenceOfParameter} = require('../../util');

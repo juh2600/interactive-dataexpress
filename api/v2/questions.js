@@ -16,6 +16,7 @@ db.once('open', () => dblogger.info('Connected'));
 
 let Question, Questions;
 const createDB = () => {
+	if(!db.models.hasOwnProperty('Questions'))
 	Questions = mongoose.model('Questions', require('./questions/schema'));
 	Question = Questions; // link; sometimes Questions makes sense, and sometimes Question makes sense
 };
@@ -66,35 +67,6 @@ const getAll = async () => {
 		}
 	).exec();
 };
-
-/*
-const update = (username, details) => {
-	Object.keys(details).forEach((key) => {
-		try {
-			validator.validate(key, details[key]);
-		} catch (err) {
-			if (/Method not found/i.test(err))
-				delete details[key];
-			else
-				throw err;
-		}
-	});
-
-	// TODO validate password-related things, however we decide to handle that
-
-	return Questions.updateOne(
-		{ "username": username },
-		details
-	);
-};
-
-const remove = (username) => {
-	return Questions.deleteOne(
-		{ "username": username }
-	);
-};
-
-*/
 
 createDB();
 module.exports = {

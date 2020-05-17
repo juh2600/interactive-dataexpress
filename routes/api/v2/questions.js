@@ -1,5 +1,6 @@
-const logger = require('logger').get('HTTP::APIv1::Questions');
-const QuestionsAPI = require('../../../api/v1/questions.js');
+const API_VERSION = 'v2'
+const logger = require('logger').get(`HTTP::API${API_VERSION}::Questions`);
+const QuestionsAPI = require(`../../../api/${API_VERSION}/questions.js`);
 const {respond, requirePresenceOfParameter} = require('../../util');
 
 const getOne = (req, res) => {
