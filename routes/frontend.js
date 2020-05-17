@@ -124,10 +124,17 @@ const editAccount = (req, res) => {
 	});
 	
 };
-//POST
 
 
-
+// Generic error page
+const errorPage = (err, req, res, next) => {
+	if(err) {
+		res.render('err', {
+			code: res.statusCode,
+			message: res.statusMessage
+		});
+	} else next();
+};
 
 
 
@@ -166,10 +173,16 @@ const routes = [
 		method: 'get',
 		handler: [requireSignedIn, editAccount]
 	},
+
 	{
 		uri: '/login',
 		method: 'post',
 		handler: loginPost
+	},
+
+	{
+		method: 'use',
+		handler: errorPage
 	}
 
 ];
