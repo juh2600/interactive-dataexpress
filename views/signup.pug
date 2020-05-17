@@ -23,39 +23,27 @@ block content
         div(id="dobDiv") 
             label(for="dob") Birthdate: 
             input(type="date" id="dob")
-            p(class="errorMsg") Must be 13 or older
+            p(class="errorMsg") Must be 13 or older 
         div(id="securityQuestionDiv1")
-            label(for="securityQuestion1") Security Question 1:
+            label(for="securityQuestion1") When is Joe's birthday?:
             select(id="securityQuestion1")
-                option(value="0") What was your childhood nickname?
-                option(value="1") In what city did you meet your spouse/significant other?
-                option(value="2") What is the name of your favorite childhood friend?
-                option(value="3") What street did you live on in third grade?
-                option(value="4") What is your oldest sibling's middle name?
-            //- label(for="securityAnswer1") Answer:
-            input(type="text" id="securityAnswer1")
-            p(class="errorMsg") Input cannot be empty
+                option(value="0") Jan 09 1998
+                option(value="1") Oct 03 1998
+                option(value="2") Nov 11 1999
+                option(value="3") May 14 1997
         div(id="securityQuestionDiv2")
-            label(for="securityQuestion2") Security Question 2:
+            label(for="securityQuestion2") When was the US Constitution signed?:
             select(id="securityQuestion2")
-                option(value="0") What school did you attend for sixth grade?
-                option(value="1") What was your childhood phone number?
-                option(value="2") What is your oldest cousin's first and last name?
-                option(value="3") What was the name of your first stuffed animal?
-                option(value="4") In what city or town did your mother and father meet?
-            //- label(for="securityAnswer2") Answer:
-            input(type="text" id="securityAnswer2")
-            p(class="errorMsg") Input cannot be empty
+                option(value="0") 1783
+                option(value="1") 1776
+                option(value="2") 1787
+                option(value="3") 1912
         div(id="securityQuestionDiv3")
-            label(for="securityQuestion3") Security Question 3:
+            label(for="securityQuestion3") Who is the best Disney Princess?:
             select(id="securityQuestion3")
-                option(value="0") Where were you when you had your first kiss?
-                option(value="1") What is the first name of the boy or girl that you first kissed?
-                option(value="2") What was the last name of your third grade teacher?
-                option(value="3") In what city does your nearest sibling live?
-                option(value="4") In what city or town was your first job?
-            //- label(for="securityAnswer3") Answer:
-            input(type="text" id="securityAnswer3")
-            p(class="errorMsg") Input cannot be empty
+                option(value="0") Mulan
+                option(value="1") Rapunzel
+                option(value="2") Ariel
+                option(value="3") Cinderella
         input(type="submit" value="Create Account")
     script(src="/scripts/formValidation.js")

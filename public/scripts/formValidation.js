@@ -88,11 +88,6 @@ const inputHandler = evt => {
         case "username":
             validateLength(evt.target, 3, 32);
             break;
-        case "securityAnswer1":
-        case "securityAnswer2":
-        case "securityAnswer3":
-            validateLength(evt.target, 1);
-            break;
         case "email":
             validateEmail(evt.target);
             break;

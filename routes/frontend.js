@@ -2,6 +2,8 @@ const logger = require('logger').get('HTTP::Frontend');
 const expressSession = require('express-session');
 const AccountsAPI = require('../api/v1/accounts.js');
 const { respond, requirePresenceOfParameter } = require('./util');
+const cookieParser = require("cookie-parser"); 
+
 
 let app = null;
 
@@ -13,18 +15,42 @@ const requireSignedIn = (req, res, next) => {
     }
 }
 
+const getCurrentDate = () => {
+	let now = new Date();
+	return now.toISOString();
+}
+
 // Public routes
 //GET
 const index = (req, res) => {
-	res.render('landing', { session: req.session });
+	let lastVisited;
+	if(req.cookies.lastVisitedIndex)
+		lastVisited = req.cookies.lastVisitedIndex;
+	else
+		lastVisited = "Never";
+	res.cookie("lastVisitedIndex", getCurrentDate(), {maxAge: 9999999999});
+	res.render('landing', { session: req.session, lastVisited: lastVisited });
+	
 };
 
-const login = (req, res) => {    
-	res.render('login', { session: req.session, failed: req.failed});
+const login = (req, res) => {   
+	let lastVisited;
+	if(req.cookies.lastVisitedLogin) 
+		lastVisited = req.cookies.lastVisitedLogin;
+	else 
+		lastVisited = "Never";
+	res.cookie("lastVisitedLogin", getCurrentDate(), {maxAge: 9999999999}); 
+	res.render('login', { session: req.session, failed: req.failed, lastVisited: lastVisited});
 };
 
 const signUp = (req, res) => {
-	res.render('signup', { session: req.session });
+	let lastVisited;
+	if(req.cookies.lastVisitedSignup) 
+		lastVisited = req.cookies.lastVisitedSignup;
+	else 
+		lastVisited = "Never";
+	res.cookie("lastVisitedSignup", getCurrentDate(), {maxAge: 9999999999}); 
+	res.render('signup', { session: req.session, lastVisited: lastVisited });
 };
 
 // TODO implement
@@ -64,17 +90,39 @@ const loginPost = (req, res) => {
 // Private routes
 //GET
 const dashboard = (req, res) => {
+	let lastVisited;
+	if(req.cookies.lastVisitedDashboard) {
+		lastVisited = req.cookies.lastVisitedDashboard;
+	}
+	else {
+		lastVisited = "Never";
+	}
+	res.cookie("lastVisitedDashboard", getCurrentDate(), {maxAge: 9999999999}); 
 	res.render('dashboard', {
-		session: req.session
+		session: req.session,
+		lastVisited: lastVisited
 	});
 };
 
 
 // TODO implement
 const editAccount = (req, res) => {
-	res.render('accountEdit', {
-		session: req.session
+	let lastVisited;
+	if(req.cookies.lastVisitedEditAccount) {
+		lastVisited = req.cookies.lastVisitedEditAccount;
+	}
+	else {
+		lastVisited = "Never";
+	}
+	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999}); 
+	AccountsAPI.get(req.session.user.username).then(account => {
+		res.render('accountEdit', {
+			session: req.session,
+			user: account,
+			lastVisited: lastVisited
+		});
 	});
+	
 };
 //POST
 
@@ -133,6 +181,8 @@ const configure = options => {
 		saveUninitialized: true,
 		resave: true
 	}));
+	app.use(cookieParser("This is my passphrase"));
+
 }
 
 module.exports = { logger, routes, configure };
