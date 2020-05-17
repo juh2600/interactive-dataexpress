@@ -1,0 +1,313 @@
+/*=====================================
+                Main
+======================================*/
+
+html {
+    margin: 0;
+    padding:0;
+    height:100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat";
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+/*=====================================
+                Nav
+======================================*/
+nav {
+    width: 100%;
+    height: 4em;
+    background-color: #222;
+    color: #fff;
+    margin:0;
+    position:fixed;
+    top:0;
+}
+nav#signedOut {
+    display:flex;
+    justify-content: space-between;
+}
+nav#signedOut > ul {
+    display:flex;
+    flex-direction: row;
+    margin:0;
+    height:100%;
+    padding:0;
+    justify-content: flex-end;
+    flex:2;
+
+}
+.navBtn {
+    flex:1;
+    list-style: none;
+    max-width: 8em;
+}
+
+.navBtn > a {
+    background-color:#222;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+    height:100%;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color:white;
+    text-decoration: none;
+}
+
+.navBtn > a:hover {
+    background-color:#333;
+}
+
+
+nav#signedIn {
+    display:flex;
+    justify-content: space-between;
+}
+#account {
+    display:flex;
+}
+#account > p {
+    margin:0 1em 0 0;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+#accountBtn {
+    height:100%;
+    padding:0 1em; 
+    background-color:#333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#accountBtn:hover {
+    background-color: #404040;
+}
+
+
+#accountBtn > div {
+    width: 1.7em;
+    position:relative;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.menuBar {
+    width:100%;
+    background-color: #fff;
+    border-radius: 10%;
+    height:0.15em;
+}
+.menuBar.mid{
+    margin:0.3em 0;
+}
+
+#slider {
+    position: fixed;
+    width:350px;
+    right:-350px;
+    top:4em;
+    bottom:0;
+    background-color: #fff;
+    z-index: 10;
+    transition: right 0.5s ease;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#sliderContent {
+    display:flex;
+    flex-direction: column;
+    
+}
+
+
+#sliderContent > div > a:hover {
+    background-color: #eee;
+}
+
+.sliderOption {
+    flex:1;
+    width:100%;
+    max-height:3em;
+    min-height:3em;
+    font-size: 1.1em;
+}
+
+.sliderOption > a{
+    width:100%;
+    height: 100%;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 2em;
+    transition: background-color 0.2s ease;
+}
+
+#sliderLogout {
+    justify-self: flex-end;
+}
+#sliderLogout > a {
+    background-color:#222;
+    color: #fff;
+    text-align:center;
+    padding:0;
+}
+#sliderLogout > a:hover {
+    background-color:#333;
+}
+
+#screen {
+    background-color: rgba(0,0,0,0.3);
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 2;
+}
+
+/*=====================================
+                Body
+======================================*/
+
+#main{
+    margin:4em 0 0 0;
+    padding: 2em;
+}
+#title {
+    margin-top:0;
+}
+
+/*=====================================
+                Forms
+======================================*/
+form {
+    margin:0 auto;
+    max-width: 500px;
+}
+form > div {
+    margin: 0.5em auto;
+}
+label {
+    display:block;
+    margin-bottom: 0.3em;
+}
+select {
+    display:block;
+    margin-bottom:2em;
+    width: 100%;
+    padding:0.3em;
+    border-radius: 5px;
+    
+}
+input:not([type="submit"]) {
+    box-sizing: border-box;
+    width:100%;
+    padding:0.3em;
+    border:1.5px solid #aaa;
+    border-radius: 5px;
+    outline:none;
+}
+
+.errorMsg {
+    color:red;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-top:0.5em;
+}
+.hidden {
+    visibility: hidden;
+}
+#headErrMsg {
+    font-size: 1em;
+}
+
+input.red{
+    border-color:#f00;
+}
+input.green{
+    border-color: #0c0;
+}
+form hr {
+    height:1.5px;
+    background-color: #999;
+    margin-bottom: 1em;
+    border:none;
+}
+
+
+
+#loginForm > div {
+    margin:1.5em 0;
+}
+
+input[type="submit"] {
+    margin:auto;
+    display:block;
+    padding:0.8em 1.5em;
+    border-radius: 5px;
+    background-color: #efefef;
+    border:1px solid #888;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #ddd;
+}
+
+/*=====================================
+                Footer
+======================================*/
+
+footer {
+    background-color: #222;
+    text-align: center;
+    color:white;
+    height: 3em;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+
+
+/*=====================================
+                Responsive
+======================================*/
+
+
+@media screen and (max-width: 600px) {
+    #dataForm {
+        width:100%;
+        margin:0;
+    }
+
+    #main {
+        padding: 0.5em;
+    }
+
+}
+
+@media screen and (max-width: 350px) {
+    #slider {
+        width:100%;
+    }
+}

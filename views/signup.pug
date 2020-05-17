@@ -1,0 +1,49 @@
+extends layout
+
+block content
+    h1(id="title") Sign Up
+    form(id="dataForm" method="post" action="/signup"  data-method="create" onsubmit="return submitForm()")
+        p(id="headErrMsg" class="errorMsg hidden" ) Please fill out the following fields:
+        div(id="usernameDiv")
+            label(for="username") Username: 
+            input(type="text" id="username" name="username")
+            p(class="errorMsg hidden" ) Must be between 3 and 32 characters
+        div(id="passwordDiv")
+            label(for="password") Password: 
+            input(type="password" id="password" name="password")
+            p(class="errorMsg hidden" ) Must have 1 number, 1 capital and be at least 8 characters long
+        div(id="confirmPasswordDiv")
+            label(for="confirmPassword") Confirm Password: 
+            input(type="password" id="confirmPassword")
+            p(class="errorMsg hidden" ) Passwords do not match
+        div(id="emailDiv")
+            label(for="email") Email: 
+            input(type="email" id="email" name="email")
+            p(class="errorMsg hidden" ) Must be valid email
+        div(id="dobDiv") 
+            label(for="dob") Birthdate: 
+            input(type="date" id="dob" name="dob")
+            p(class="errorMsg hidden" ) Must be 13 or older 
+        div(id="securityQuestionDiv1")
+            label(for="securityQuestion1") When is Joe's birthday?:
+            select(id="securityQuestion1" name="answer1")
+                option(value="0") Jan 09 1998
+                option(value="1") Oct 03 1998
+                option(value="2") Nov 11 1999
+                option(value="3") May 14 1997
+        div(id="securityQuestionDiv2")
+            label(for="securityQuestion2") When was the US Constitution signed?:
+            select(id="securityQuestion2" name="answer2")
+                option(value="0") 1783
+                option(value="1") 1776
+                option(value="2") 1787
+                option(value="3") 1912
+        div(id="securityQuestionDiv3")
+            label(for="securityQuestion3") Who is the best Disney Princess?:
+            select(id="securityQuestion3" name="answer3")
+                option(value="0") Mulan
+                option(value="1") Rapunzel
+                option(value="2") Ariel
+                option(value="3") Cinderella
+        input(type="submit" value="Create Account")
+    script(src="/scripts/formValidation.js")
