@@ -88,7 +88,7 @@ const get = async (username) => {
 		if (account) {
 			account.password = undefined;
 		}
-		return account;
+		return account.toObject();
 	});
 };
 

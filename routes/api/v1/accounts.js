@@ -1,6 +1,6 @@
 const logger = require('logger').get('HTTP::APIv1::Accounts');
-const AccountsAPI = require('../api/v1/accounts.js');
-const {respond, requirePresenceOfParameter} = require('./util');
+const AccountsAPI = require('../../../api/v1/accounts.js');
+const {respond, requirePresenceOfParameter} = require('../../util');
 
 const createAccount = (req, res) => {
 	let giveUp = false;
