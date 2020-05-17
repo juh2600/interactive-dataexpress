@@ -22,6 +22,7 @@ const getCurrentDate = () => {
 
 // Public routes
 //GET
+//GET route for index/landing page
 const index = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedIndex)
@@ -33,6 +34,7 @@ const index = (req, res) => {
 	
 };
 
+//GET route for login page
 const login = (req, res) => {   
 	let lastVisited;
 	if(req.cookies.lastVisitedLogin) 
@@ -43,6 +45,7 @@ const login = (req, res) => {
 	res.render('login', { session: req.session, failed: req.failed, lastVisited: lastVisited});
 };
 
+//GET route for signup page
 const signUp = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedSignup) 
@@ -53,9 +56,8 @@ const signUp = (req, res) => {
 	res.render('signup', { session: req.session, lastVisited: lastVisited });
 };
 
-// TODO implement
+//GET route for logout. Redirects to landing page
 const logout = (req, res) => {
-	
 	req.session.destroy( err => {
         if(err) {
             console.log(err);
@@ -66,6 +68,7 @@ const logout = (req, res) => {
     })
 };
 
+//Post route for login form
 const loginPost = (req, res) => {
 	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
 		if(isOK) {
@@ -91,6 +94,8 @@ const newSession = req => {
 }
 // Private routes
 //GET
+
+//GET route for dashboard page. Must be logged in to see
 const dashboard = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedDashboard) {
@@ -107,7 +112,7 @@ const dashboard = (req, res) => {
 };
 
 
-
+//GET route for account edit page. Must be logged in to see
 const editAccount = (req, res) => {
 	let lastVisited;
 	if(req.cookies.lastVisitedEditAccount) {
@@ -143,7 +148,7 @@ const errorPage = (err, req, res, next) => {
 };
 
 //POST
-
+//Post route for account edit form
 const editAccPost = (req, res) => {
 	console.log(req.body);
 	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
@@ -176,7 +181,7 @@ const editAccPost = (req, res) => {
 	}).catch(err => {editAccount(req, res);});
 }
 
-
+//Post route for signup form
 const signupPost = (req, res) => {
 	let user = {
 		username: req.body.username,
