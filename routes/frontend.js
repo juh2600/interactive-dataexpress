@@ -41,8 +41,6 @@ const logout = (req, res) => {
 };
 
 const loginPost = (req, res) => {
-	requirePresenceOfParameter(req.body.username, "username", res);
-	requirePresenceOfParameter(req.body.password, "password", res);
 	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
 		if(isOK) {
 			req.session.user = {
@@ -52,12 +50,11 @@ const loginPost = (req, res) => {
 			res.redirect("/dashboard");
 		}
 		else {
-			req.failed = true;
-			//res.redirect("/login");
-			login(req, res);
+			throw 'Username/password mismatch'; // this doesn't get used anywhere, but it tells us in code what's going on
 		}
 	}).catch(err => {
-		respond(500, `Error while logging in: ${err}`, res);
+			req.failed = true;
+			login(req, res);
 	});
 
 }
