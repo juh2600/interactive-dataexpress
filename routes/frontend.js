@@ -60,9 +60,7 @@ const logout = (req, res) => {
 		if(err) {
 			logger.error(err);
 		}
-		else {
-			res.redirect('/');
-		}
+		res.redirect('/');
 	})
 };
 

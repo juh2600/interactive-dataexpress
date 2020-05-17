@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 // We can't just leave /.../.test as a method reference for some reason, so instead we wrap it in a lambda.
-	const test = (regex) => (x) => regex.test(x);
+const test = (regex) => (x) => regex.test(x);
 
 const params = {
 	username: [
@@ -42,9 +42,9 @@ const params = {
 
 
 // Round off truthy values to true and falsy values to false.
-	// This will catch things like 0, '', null, undefined, and false.
-	// It will not identify [] as empty.
-	const isNotEmpty = (x) => { return !!x; }
+// This will catch things like 0, '', null, undefined, and false.
+// It will not identify [] as empty.
+const isNotEmpty = (x) => { return !!x; }
 
 const exist = {
 	username: isNotEmpty,
@@ -80,6 +80,12 @@ const valid = {
 	dob: (dob) => {
 		if(dob == 'Invalid Date')
 			throw `Invalid date`;
+		let minAge = 13;
+		let dobCeiling = new Date();
+		dobCeiling.setFullYear(dobCeiling.getFullYear()-minAge);
+		if(dob > dobCeiling)
+			throw `DOB too young to sign up; must be at least ${minAge}`;
+
 		return true;
 	},
 
