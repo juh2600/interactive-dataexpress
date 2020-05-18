@@ -3,3 +3,10 @@ extends layout
 
 block content
 	h1#title Welcome to the FROGS
+	section#dataDisplay
+		div#leftBtn.arrowBtn &lt;
+		section#graphDiv
+			p#yAxisLabel y-axis
+			canvas#apiCanvas(width=400, height=250)
+			p#xAxisLabel x-axis
+		div#rightBtn.arrowBtn &gt;
