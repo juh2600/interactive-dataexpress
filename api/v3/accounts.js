@@ -89,9 +89,8 @@ const create = async (accountDetails) => {
 		// Ensure that our parameters are valid, using our validation rules
 		// specified in `./accounts/validate'. We can get the necessary keys
 		// directly from the schema.
-		let params = Object.keys(
-			mongoose.models['Accounts'].schema.paths
-		).filter(x => x[0] != '_'); // get rid of mongoose stuff like _id
+		let params = Object.keys(Account.schema.paths)
+			.filter(x => x[0] != '_'); // get rid of mongoose stuff like _id
 		params.forEach((param) => {
 			let result = validator.validate(param, accountDetails[param]);
 			if(result) {

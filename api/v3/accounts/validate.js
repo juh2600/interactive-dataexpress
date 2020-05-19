@@ -75,9 +75,10 @@ const valid = {
 	},
 
 	answers: function(answers) {
-		if(!as) return `Answers are required but were not provided`;
+		if(!answers) return `Answers are required but were not provided`;
 		if(answers.constructor.name != 'Array') return `Answers must be an array`;
-		if(answers.length !== process.env.ANSWER_COUNT) return `Answers array must have a length of exactly ${process.env.ANSWER_COUNT}; found ${answers.length} elements`;
+		if(answers.length != process.env.ANSWER_COUNT)
+			return `Answers array must have a length of exactly ${process.env.ANSWER_COUNT}; found ${answers.length} elements`;
 		let out = [];
 		for(let i in answers) {
 			out[i] = this.answer(answers[i]);
@@ -86,7 +87,8 @@ const valid = {
 	},
 
 	answer: (a) => {
-		if(a.constructor.name != 'Number' || a !== a % 4) return `An invalid answer was provided`;
+		if(a === null || a === undefined) return `No answer was provided`;
+		if(a.constructor.name != 'Number' || a < 0 || a > 3 || a !== Math.floor(a)) return `An invalid answer was provided`;
 	}
 };
 

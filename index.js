@@ -1,6 +1,7 @@
 const package = require('./package.json');
 console.log(`Starting ${package.name} v${package.version}`);
-process.env.NODE_ENV = 'production'; // this will cause a warning from express-session; it's ok
+//process.env.NODE_ENV = 'production'; // this will cause a warning from express-session; it's ok
+process.env.NODE_ENV = 'debug';
 
 const logger = require('./logger').get('main')
 const express = require("express");
