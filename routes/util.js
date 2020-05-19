@@ -9,8 +9,24 @@ const makeSearchable = (object, list_key) => {
 
 const respond = (code, why, res) => {
 	if(!res) throw `Missing response object`;
+	if(why === null || why === '') {
+		res.status(code).end();
+		return;
+	}
+	if(why.constructor.name == 'Object') {
+		respondJSON(code, null, why, res);
+		return;
+	}
 	res.statusMessage = why;
 	res.status(code).end();
+};
+
+const respondJSON = (code, why, obj, res) => {
+	if(!res) throw `Missing response object`;
+	if(code < 200 || code == 204 || code == 304) throw `Response code ${code} MUST NOT have a message body`;
+	res.statusCode = code;
+	if(why !== null) res.statusMessage = why;
+	res.json(obj);
 };
 
 const requirePresenceOfParameter = (param, name, res) => {
