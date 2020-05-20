@@ -76,53 +76,31 @@ const create = async (accountDetails) => {
 	// Ensure that the date is a date object.
 	accountDetails.dob = new Date(accountDetails.dob);
 
-	// Check if a user with the same name already exists.
-	return get(accountDetails.username).then((user) => {
-		let errors = {};
-		// If the search for a user with this name turns up something, tell
-		// the caller that this username is taken.
-		if (user) {
-			errors.type     = 'validation';
-			errors.message  = 'Parameters did not pass validation.'
-			errors.username = `Username "${user.username}" is already taken`;
+	// run validation
+	await validate(accountDetails,
+		Object.keys(Account.schema.paths).filter(x => x[0] != '_'));
+
+	/**
+	 * Secure user data
+	 * Hash the password and anything else that needs hashing.
+	 */
+	accountDetails = hashStuff(accountDetails);
+
+	/**
+	 * Create user
+	 * If we've gotten this far, we know the username is
+	 * available and all the data is good. Create a new user.
+	 */
+	let account = new Account(accountDetails);
+	account.save((err) => {
+		if (err) {
+			throw {
+				type: 'db',
+				message: err
+			};
 		}
-		// Ensure that our parameters are valid, using our validation rules
-		// specified in `./accounts/validate'. We can get the necessary keys
-		// directly from the schema.
-		let params = Object.keys(Account.schema.paths)
-			.filter(x => x[0] != '_'); // get rid of mongoose stuff like _id
-		params.forEach((param) => {
-			let result = validator.validate(param, accountDetails[param]);
-			if(result) {
-				errors.type    = 'validation';
-				errors.message = 'Parameters did not pass validation.'
-				errors[param]  = result;
-			}
-		});
-		if(Object.keys(errors).length > 0) throw errors;
-
-		/**
-		 * Secure user data
-		 * Hash the password and anything else that needs hashing.
-		 */
-		accountDetails = hashStuff(accountDetails);
-
-		/**
-		 * Create user
-		 * If we've gotten this far, we know the username is
-		 * available and all the data is good. Create a new user.
-		 */
-		let account = new Account(accountDetails);
-		account.save((err) => {
-			if (err) {
-				throw {
-					type: 'db',
-					message: err
-				};
-			}
-		});
-		return true; // if we made it this far, we deserve a treat
 	});
+	return true; // if we made it this far, we deserve a treat
 };
 
 
@@ -184,24 +162,8 @@ const update = async (username, changes) => {
 	if(changes.dob) changes.dob = new Date(changes.dob);
 
 	// Attempt to validate each key-value pair in the object of changes to
-	// apply. If we cannot find a method to validate the pair, assume it is
-	// irrelevant and delete it.
-	let errors = {};
-	Object.keys(changes).forEach((key) => {
-		let result = validator.validate(key, changes[key]);
-		if(result) { // something is wrong
-			// Delete anything we can't validate
-			if (/Method not found/i.test(result)) {
-				changes[key] = undefined;
-				delete changes[key];
-			} else {
-				errors.type = 'validation';
-				errors.message = 'Parameters did not pass validation.'
-				errors[key] = result;
-			}
-		}
-	});
-	if(Object.keys(errors).length > 0) throw errors;
+	// apply.
+	await validate(changes);
 
 	/**
 	 * Secure user data
@@ -238,6 +200,18 @@ const remove = async (username) => {
  * other scenarios, including when the user does not exist.
  */
 const checkPassword = async (username, password) => {
+	let errors = {};
+	if(!username) {
+		errors.type = 'missing argument';
+		errors.message = 'Missing argument';
+		errors.username = 'Username is required but was not provided';
+	}
+	if(!password) {
+		errors.type = 'missing argument';
+		errors.message = 'Missing argument';
+		errors.password = 'Password is required but was not provided';
+	}
+	if(Object.keys(errors).length > 0) throw errors;
 	return Accounts.findOne(
 		{"username": username},
 		(err) => {if (err) throw err;}
@@ -265,10 +239,47 @@ const getAnswers = async (username) => {
 };
 
 /**
- * Expose the validation API to the user.
+ * Allow the caller to validate an arbitrary set of data.
+ * The `keys' parameter is optional. If present, the method will only
+ * attempt to validate the keys in the array. If omitted, the method will
+ * attempt to validate every key in the data.
  */
-const validate = async (key, value) => {
-	return validator.validate(key, value);
+const validate = async (data, keys) => {
+	if(keys === undefined || keys === null) keys = Object.keys(data);
+	if(keys.constructor.name == 'String') keys = [keys];
+	if(keys.constructor.name == 'Object') keys = Object.keys(keys);
+	if(data.dob) data.dob = new Date(data.dob);
+	errors = {};
+	keys.forEach((key) => {
+		let result = validator.validate(key, data[key]);
+		if(result) {
+			errors.type    = 'validation';
+			errors.message = 'Parameters did not pass validation.'
+			errors[key]  = result;
+		}
+	});
+
+	// If we want to check the username...
+	if(keys.indexOf('username') >= 0) {
+		// ...check whether a user with the same name already exists.
+		if(data.username) {
+		await get(data.username).then((user) => {
+			// If the search for a user with this name turns up something, tell
+			// the caller that this username is taken.
+			if (user) {
+				errors.type     = 'validation';
+				errors.message  = 'Parameters did not pass validation.'
+				errors.username = `Username "${user.username}" is already taken`;
+			}
+		});
+		} else {
+				errors.type     = 'validation';
+				errors.message  = 'Parameters did not pass validation.'
+				errors.username = `Username is required but was not provided`;
+		}
+	}
+	if(Object.keys(errors).length > 0) throw errors;
+	return true;
 };
 
 createDB();

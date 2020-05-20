@@ -65,6 +65,7 @@ const valid = {
 
 	dob: (dob) => {
 		if(!dob) return `Date of birth is required but was not provided`;
+		if(dob.constructor.name != 'Date') return `Date of birth is not a date object`;
 		if(dob == 'Invalid Date')
 			return `Invalid date`;
 		let minAge = 13; // FIXME magic number
