@@ -4,9 +4,15 @@ extends layout
 block content
 	h1#title Welcome to the FROGS
 	section#dataDisplay
-		div#leftBtn.arrowBtn &lt;
+		div#leftSide
+			div#leftBtn.arrowBtn &lt;
 		section#graphDiv
-			p#yAxisLabel y-axis
-			canvas#apiCanvas(width=400, height=250)
-			p#xAxisLabel x-axis
-		div#rightBtn.arrowBtn &gt;
+			p#titleLabel Title
+			p#yAxisLabel Num of times chosen
+			div#canvasContainer
+				canvas#apiCanvas(width=400, height=250)
+			p#xAxisLabel Option
+		div#rightSide
+			div#rightBtn.arrowBtn &gt;
+
+	script(src="/scripts/barGraph.js")

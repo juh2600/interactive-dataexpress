@@ -25,6 +25,7 @@
     "express-session": "^1.17.1",
     "logger": "github:josephreed2600/logger#master",
     "mongoose": "^5.9.12",
+    "nodemon": "^2.0.4",
     "pug": "^2.0.4"
   }
 }
