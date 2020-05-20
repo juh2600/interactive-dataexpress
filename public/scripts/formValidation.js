@@ -4,12 +4,12 @@ let form = [
 	{id: "dob", error: true},
 ]
 
-const typeOfForm = document.getElementById("dataForm").dataset.method;
-
+let typeOfForm;
 
 const init = () => {
 	addPasswordsToForm();
 	setEventListeners();
+	typeOfForm = document.getElementById("dataForm").dataset.method;
 }
 
 const addPasswordsToForm = () => {
@@ -187,4 +187,4 @@ const setEventListeners = () => {
 }
 
 
-init();
+document.addEventListener('DOMContentLoaded', (evt) => { init(); });

@@ -1,10 +1,19 @@
+mixin css(name)
+	link(href="/css/"+name+".css", rel="stylesheet", type="text/css")
+
+mixin js(name)
+	script(src="/scripts/"+name+".js")
+
 doctype html
-html
+html(lang="en")
 	head
 		title Data Express
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		link(href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap", rel="stylesheet")
-		link(href="/style.css", rel="stylesheet")
+		block links
+			+css("main")
+		block scripts
+			+js("navbar")
 
 	body
 		if session && session.user && session.user.isAuthenticated
@@ -15,5 +24,3 @@ html
 			block content
 	
 	footer Last visited this page: #{lastVisited}
-	script(src="/scripts/navbar.js")
-	

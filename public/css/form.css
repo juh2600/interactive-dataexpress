@@ -1,0 +1,16 @@
+input:not([type=submit]) {
+	border: black solid 1px;
+}
+input:not([type=submit]):valid {
+	border-color: #22cc22;
+}
+input:not([type=submit]):invalid:not(:placeholder-shown) {
+	border-color: #ff2222;
+}
+input:not([type=submit])+span.validationMessage,
+select+span.validationMessage {
+	min-height: 1.5em;
+	padding: 0.5em 0;
+	width: 100%;
+	display: block;
+}

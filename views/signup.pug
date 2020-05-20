@@ -1,51 +1,68 @@
 extends layout
 
+append scripts
+	+js('signup')
+
+append links
+	+css('form')
+
 block content
 	h1#title Sign Up
-	form#dataForm(method="post", action="/signup",  data-method="create", onsubmit="return submitForm()")
-		if failed && failed.reason
-			p#usernameTaken.errorMsg This username is already taken.
-		p#headErrMsg.errorMsg.hidden Please fill out the following fields:
-		div#usernameDiv
-			label(for="username") Username: 
-			input#username(type="text", name="username")
-			p.errorMsg.hidden Must be between 3 and 32 characters
-		div#passwordDiv
-			label(for="password") Password: 
-			input#password(type="password", name="password")
-			p.errorMsg.hidden Must have 1 number, 1 capital and be at least 8 characters long
-		div#confirmPasswordDiv
-			label(for="confirmPassword") Confirm Password: 
-			input#confirmPassword(type="password")
-			p.errorMsg.hidden Passwords do not match
-		div#emailDiv
-			label(for="email") Email: 
-			input#email(type="email", name="email")
-			p.errorMsg.hidden Must be valid email
-		div#dobDiv 
-			label(for="dob") Birthdate: 
-			input#dob(type="date", name="dob")
-			p.errorMsg.hidden Must be 13 or older 
-		div#securityQuestionDiv1
-			label(for="securityQuestion1") When is Joe's birthday?
-			select#securityQuestion1(name="answer1")
-				option(value="0") Jan 09 1998
-				option(value="1") Oct 03 1998
-				option(value="2") Nov 11 1999
-				option(value="3") May 14 1997
-		div#securityQuestionDiv2
-			label(for="securityQuestion2") When was the US Constitution signed?
-			select#securityQuestion2(name="answer2")
-				option(value="0") 1783
-				option(value="1") 1776
-				option(value="2") 1787
-				option(value="3") 1912
-		div#securityQuestionDiv3
-			label(for="securityQuestion3") Who is the best Disney Princess?
-			select#securityQuestion3(name="answer3")
-				option(value="0") Mulan
-				option(value="1") Rapunzel
-				option(value="2") Ariel
-				option(value="3") Cinderella
-		input(type="submit", value="Create Account")
-	script(src="/scripts/formValidation.js")
+	//- TODO when working on no-js support, populate action and method here and strip them on page load
+	form#dataForm(onsubmit="return false")
+		section#userInfo
+			div#usernameCtr
+				label(for="username") Username:
+				input#username(type="text", name="username", required, pattern=".{3,32}", placeholder="username", title="Must consist of between three (3) and thirty-two (32) characters, all of which must be alphanumeric or underscores")
+				span.validationMessage
+
+			div#passwordCtr
+				label(for="password") Password:
+				input#password(type="password", name="password", required, pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,64}", placeholder="password", title="Must consist of between eight (8) and sixty-four (64) characters, among which must be at least one (1) uppercase letter, one (1) lowercase letter, and one (1) digit")
+				span.validationMessage
+
+			div#passwordConfirmCtr
+				label(for="passwordConfirm") Confirm Password:
+				input#passwordConfirm(type="password", required, pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,64}", placeholder="confirm password", title="Must match password field")
+				span.validationMessage
+
+			div#emailCtr
+				label(for="email") Email:
+				input#email(type="email", name="email", required, autocomplete="email", title="Must be a valid email address")
+				span.validationMessage
+
+			div#dobCtr
+				label(for="dob") Birthdate:
+				- var dobCeiling = new Date()
+				- dobCeiling.setFullYear(dobCeiling.getFullYear()-13)
+				- dobCeiling = dobCeiling.toISOString().match(/.*(?=T)/)[0]
+				input#dob(type="date", name="dob", required, title="Must be a date of birth at least thirteen (13) years old", max=dobCeiling)
+				span.validationMessage
+
+		section#questions
+			div#securityQuestionCtr1
+				label(for="securityQuestion1") When is Joe's birthday?
+				select#securityQuestion1(name="answer1")
+					option(value="0") Jan 09 1998
+					option(value="1") Oct 03 1998
+					option(value="2") Nov 11 1999
+					option(value="3") May 14 1997
+				span.validationMessage
+			div#securityQuestionCtr2
+				label(for="securityQuestion2") When was the US Constitution signed?
+				select#securityQuestion2(name="answer2")
+					option(value="0") 1783
+					option(value="1") 1776
+					option(value="2") 1787
+					option(value="3") 1912
+				span.validationMessage
+			div#securityQuestionCtr3
+				label(for="securityQuestion3") Who is the best Disney Princess?
+				select#securityQuestion3(name="answer3")
+					option(value="0") Mulan
+					option(value="1") Rapunzel
+					option(value="2") Ariel
+					option(value="3") Cinderella
+				span.validationMessage
+			input(type="submit", value="Create Account")
+
