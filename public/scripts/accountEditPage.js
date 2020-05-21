@@ -4,3 +4,4 @@ for(let i = 0; i < 3; i++) {
 	dropdown.selectedIndex = dropdown.dataset.qid;
 
 }
+for(let i = 0; i < )
