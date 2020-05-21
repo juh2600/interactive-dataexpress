@@ -1,6 +1,6 @@
 const logger = require('../logger').get('HTTP::Frontend');
 const expressSession = require('express-session');
-const AccountsAPI = require('../api/v2/accounts.js');
+const AccountsAPI = require('../api/v3/accounts.js');
 const { respond, requirePresenceOfParameter } = require('./util');
 const cookieParser = require("cookie-parser");
 
@@ -53,6 +53,13 @@ const signUp = (req, res) => {
 	res.cookie("lastVisitedSignup", getCurrentDate(), {maxAge: 9999999999});
 	res.render('signup', { session: req.session, lastVisited: lastVisited, failed: req.failed });
 };
+
+
+const api = (req, res) => {
+	AccountsAPI.getAnswerFrequency().then(data => {
+		res.json(data);
+	});
+}
 
 //GET route for logout. Redirects to landing page
 const logout = (req, res) => {
@@ -274,7 +281,11 @@ const routes = [
 		method: 'post',
 		handler: signupPost
 	},
-
+	{
+		uri: '/api',
+		method: 'get',
+		handler: api
+	},
 	{
 		method: 'use',
 		handler: notFoundPage

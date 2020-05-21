@@ -1,12 +1,13 @@
 let selectedTableIndex = 0;
-let jsonData = {data: [{options:[{name:'left', frequency: 1}, {name:'up', frequency: 2}, {name:'right', frequency: 0}, {name:'down', frequency: 7}, {name:'left', frequency: 20}, {name:'up', frequency: 2}, {name:'right', frequency: 0}, {name:'down', frequency: 7}]}, {options:[{name:'left', frequency: 1}, {name:'up', frequency: 2}]}]}
+let jsonData;
 
 const canvas = document.getElementById("apiCanvas");
 const ctx = canvas.getContext("2d");
 
 
 const buildTable = () => {
-    let selectedTable = jsonData.data[selectedTableIndex];
+    setTitle();
+    let selectedTable = jsonData.questions[selectedTableIndex];
     //Offset the bars so that there can be units labeled on the canvas
     let offsetForUnits = 30;
     //Gap between bars in pixels
@@ -47,7 +48,6 @@ const buildTable = () => {
             }
         }
     }
-    console.log(step);
     //Draw the unit lines
     for(let i = 0; i < topLine + 1; i += step) {
         ctx.strokeStyle = "#ccc";
@@ -76,6 +76,10 @@ const buildTable = () => {
 
 }
 
+
+const setTitle = () => {
+    document.getElementById("titleLabel").innerHTML = jsonData.questions[selectedTableIndex].title;
+}
 const clearCanvas = () => {
     ctx.canvas.width = ctx.canvas.width;
 }
@@ -85,8 +89,8 @@ const clearCanvas = () => {
 const cycleTable = dir => {
     selectedTableIndex += dir;
     if(selectedTableIndex < 0)
-        selectedTableIndex = jsonData.data.length-1;
-    else if(selectedTableIndex >= jsonData.data.length)
+        selectedTableIndex = jsonData.questions.length-1;
+    else if(selectedTableIndex >= jsonData.questions.length)
         selectedTableIndex = 0;
     canvas.style.opacity = 0;
     setTimeout(() => {
@@ -111,13 +115,12 @@ const resizeCanvas = () => {
 const init = () => {
     document.getElementById("leftBtn").addEventListener("click", evt => {cycleTable(-1)});
     document.getElementById("rightBtn").addEventListener("click", evt => {cycleTable(1)});
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-    fetch("https://localhost:3000/api")
+    fetch("/api")
         .then(response => response.json())
         .then(data => {
             jsonData = data;
-            buildTable();
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
         }).catch(err => console.log(err));
 }
 

@@ -225,8 +225,8 @@ nav#signedIn {
 
 #titleLabel {
     grid-area: title;
-    font-size:1.5em;
-    font-weight: bold;
+    font-size:1.4em;
+    padding-bottom:0.5em;
 }
 
 #graphDiv {
@@ -406,6 +406,9 @@ footer {
     
     #graphDiv {
         grid-template-areas: "title title" "yaxis canvas" ". xaxis";
+    }
+    .navBtn{
+        max-width: 6em;
     }
 }
 

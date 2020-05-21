@@ -181,6 +181,28 @@ const createDB = () => {
 		});
 	};
 
+
+	const getAnswerFrequency = async () => {
+		return Accounts.find(
+			(err, accounts) => {
+				if (err) throw err;
+				return accounts;
+			}
+		).exec().then((accounts) => { 
+			let data = {questions:[
+				{title: "When is Joe's birthday?", options:[{name:'Jan 09 1998', frequency: 0}, {name:'Oct 03 1998', frequency: 0}, {name:'Nov 11 1999', frequency: 0}, {name:'May 14 1997', frequency: 0} ]},
+				{title: "When was the US Constitution signed?", options:[{name:'1783', frequency: 0}, {name:'1776', frequency: 0}, {name:'1887', frequency: 0}, {name:'1912', frequency: 0} ]},
+				{title: "Who is the best Disney Princess?", options:[{name:'Mulan', frequency: 0}, {name:'Rapunzel', frequency: 0}, {name:'Ariel', frequency: 0}, {name:'Cinderella', frequency: 0} ]}
+			]};
+			accounts.forEach(account => {
+				for(let i = 0; i < 3; i++) {
+					data.questions[i].options[account.answers[i]].frequency += 1;
+				}
+			});
+			return data;
+		});
+	};
+
 createDB();
 module.exports = {
 	create,
@@ -188,5 +210,6 @@ module.exports = {
 	update,
 	remove,
 	checkPassword,
-	getAnswers
+	getAnswers,
+	getAnswerFrequency
 };
