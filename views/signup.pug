@@ -8,7 +8,6 @@ append links
 
 block content
 	h1#title Sign Up
-	//- TODO when working on no-js support, populate action and method here and strip them on page load
 	form#dataForm(onsubmit="return false")
 		section#userInfo
 			div#usernameCtr
@@ -48,6 +47,7 @@ block content
 					option(value="2") Nov 11 1999
 					option(value="3") May 14 1997
 				span.validationMessage
+
 			div#securityQuestionCtr2
 				label(for="securityQuestion2") When was the US Constitution signed?
 				select#securityQuestion2(name="answer2")
@@ -56,6 +56,7 @@ block content
 					option(value="2") 1787
 					option(value="3") 1912
 				span.validationMessage
+
 			div#securityQuestionCtr3
 				label(for="securityQuestion3") Who is the best Disney Princess?
 				select#securityQuestion3(name="answer3")
