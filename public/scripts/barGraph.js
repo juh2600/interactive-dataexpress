@@ -64,8 +64,13 @@ const buildTable = () => {
     
     //Color of bars
     ctx.fillStyle = "#222";
+    
     //Loop and draw each bar
     for(let i = 0; i < selectedTable.options.length; i++) {
+        if(selectedTable.options[i].correct)
+            ctx.fillStyle = "#00ec24";
+        else
+        ctx.fillStyle = "#ff0f17";
         let barHeight =  selectedTable.options[i].frequency == 0 ? 3 : unitBarHeight * selectedTable.options[i].frequency;
         ctx.fillRect((unitBarWidth + barGap) * i + offsetForUnits + (barGap/2), ((canvas.height - offsetForUnits) - barHeight) , unitBarWidth, barHeight);
 
