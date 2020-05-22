@@ -43,6 +43,42 @@ block content
 				label(for="newPassword") New Password:
 				input#newPassword(type="password", name="newPassword")
 				p.errorMsg.hidden Must have 1 number, 1 capital and be at least 8 characters long
+
+			div#monsterProfilePic
+				div#options
+					label(for="monsterProfilePic") Create your Profile Pic!
+					select#eyes(name='eyes')
+						option(value='1') 1
+						option(value='2') 2
+						option(value='3') 3
+						option(value='4') 4
+						option(value='5') 5
+						option(value='6') 6
+						option(value='7') 7
+						option(value='9') 8
+						option(value='10') 9
+					select#nose(name='nose')
+						option(value='2') 1
+						option(value='3') 2
+						option(value='4') 3
+						option(value='5') 4
+						option(value='6') 5
+						option(value='7') 6
+						option(value='8') 7
+						option(value='9') 8
+					select#mouth(name='mouth')
+						option(value='1') 1
+						option(value='3') 2
+						option(value='5') 3
+						option(value='6') 4
+						option(value='7') 5
+						option(value='9') 6
+						option(value='10') 7
+						option(value='11') 8
+					input(type="range" min="1" max="360" class="slider" id="colorPicker")
+				div#picture
+					img(src=`http://api.adorable.io/avatars/face/eyes${'eyes'}/nose${'nose'}/mouth${'mouth'}/${'hsl'}` id='pic')
+
 			hr
 			div#oldPasswordDiv
 				label(for="oldPassword") Enter password to update:
@@ -51,3 +87,4 @@ block content
 		input(type="submit", value="Update Account")
 	script(src="/scripts/accountEditPage.js")
 	script(src="/scripts/formValidation.js")
+	script(src="/scripts/avatar.js")
