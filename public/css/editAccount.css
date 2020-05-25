@@ -1,0 +1,18 @@
+@media screen and (min-width: 600px) {
+	section#submit {
+		display: grid;
+		grid-template-areas: 'password submit';
+	}
+
+	#oldPasswordCtr {
+		grid-area: password;
+	}
+
+	input[type=submit] {
+		grid-area: submit;
+	}
+
+	#oldPassword:valid {
+		border-color: inherit;
+	}
+}
