@@ -65,5 +65,40 @@ block content
 					option(value="2") Ariel
 					option(value="3") Cinderella
 				span.validationMessage
-			input(type="submit", value="Create Account")
 
+		section#avatar
+			p Create your Profile Pic!
+			label(for="avatarEyes") Eyes:
+			select#avatarEyes(name='eyes')
+				option(value='1') 1
+				option(value='2') 2
+				option(value='3') 3
+				option(value='4') 4
+				option(value='5') 5
+				option(value='6') 6
+				option(value='7') 7
+				option(value='9') 8
+				option(value='10') 9
+			label(for="avatarNose") Nose:
+			select#avatarNose(name='nose')
+				option(value='2') 1
+				option(value='3') 2
+				option(value='4') 3
+				option(value='5') 4
+				option(value='6') 5
+				option(value='7') 6
+				option(value='8') 7
+				option(value='9') 8
+			label(for="avatarMouth") Mouth:
+			select#avatarMouth(name='mouth')
+				option(value='1') 1
+				option(value='3') 2
+				option(value='5') 3
+				option(value='6') 4
+				option(value='7') 5
+				option(value='9') 6
+				option(value='10') 7
+				option(value='11') 8
+
+		section#confirm
+			input(type="submit", value="Create Account")
