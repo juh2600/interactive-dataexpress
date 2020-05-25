@@ -193,6 +193,100 @@ nav#signedIn {
     margin-top:0;
 }
 
+
+
+/*=====================================
+                Canvas
+======================================*/
+
+#dataDisplay {
+    display:grid;
+    grid-template-columns: 2em 1fr 2em;
+    grid-template-rows: 1fr;
+    grid-template-areas: "leftSide graph rightSide";
+    grid-gap: 0.7em;
+    max-width:800px;
+    margin: auto;
+}
+
+#dataDisplay > div {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+
+}
+#leftSide {
+    grid-area: leftSide;
+}
+
+#rightSide {
+    grid-area: rightSide;
+}
+
+#titleLabel {
+    grid-area: title;
+    font-size:1.4em;
+    padding-bottom:0.5em;
+}
+
+#graphDiv {
+    grid-area: graph;
+    overflow: hidden;
+    display:grid;
+    grid-template-columns: 1.5em 1fr;
+    grid-template-rows: 3em 1fr 1.5em;
+    grid-template-areas: ". title" "yaxis canvas" ". xaxis";
+}
+#graphDiv > p {
+    padding:0;
+    margin:0;
+}
+
+#apiCanvas {
+    transition: opacity 0.5s ease;
+    opacity: 1;
+}
+#yAxisLabel {
+    grid-area: yaxis;
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+#xAxisLabel {
+    grid-area: xaxis;
+    text-align: center;
+}
+
+#canvasContainer {
+    grid-area: canvas;
+    width:100%;
+    overflow:hidden;
+}
+
+
+.arrowBtn {
+    height:4em;
+    width:100%;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    border:1px solid #333;
+    color: #333;
+    background-color: #fff;
+    transition: color 0.2s, background-color, 0.2s;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.arrowBtn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+
+
 /*=====================================
                 Forms
 ======================================*/
@@ -272,7 +366,7 @@ input[type="submit"]:hover {
 }
 
 /*=====================================
-                Footer
+              Footer
 ======================================*/
 
 footer {
@@ -290,7 +384,7 @@ footer {
 
 
 /*=====================================
-                Responsive
+            Responsive
 ======================================*/
 
 
@@ -304,6 +398,18 @@ footer {
         padding: 0.5em;
     }
 
+    #dataDisplay {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 3em;
+        grid-template-areas: "graph graph" "leftSide rightSide";
+    }
+    
+    #graphDiv {
+        grid-template-areas: "title title" "yaxis canvas" ". xaxis";
+    }
+    .navBtn{
+        max-width: 6em;
+    }
 }
 
 @media screen and (max-width: 350px) {

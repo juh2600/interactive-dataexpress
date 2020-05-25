@@ -22,6 +22,12 @@ app.set("views", __dirname+"/views");
 app.use(express.static(path.join(__dirname+"/public")));
 
 
+app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+});
+
 logger.info('Configuring routes...');
 let routeFiles = [`api/${process.env.API_VERSION}/accounts`, 'frontend'];
 const routeManager = require('./routes/manager');

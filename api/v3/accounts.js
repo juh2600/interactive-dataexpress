@@ -282,6 +282,27 @@ const validate = async (data, keys) => {
 	return true;
 };
 
+	const getAnswerFrequency = async () => {
+		return Accounts.find(
+			(err, accounts) => {
+				if (err) throw err;
+				return accounts;
+			}
+		).exec().then((accounts) => { 
+			let data = {questions:[
+				{title: "When is Joe's birthday?", options:[{name:'Jan 09 1998', frequency: 0, correct: false}, {name:'Oct 03 1998', frequency: 0, correct: true}, {name:'Nov 11 1999', frequency: 0, correct: false}, {name:'May 14 1997', frequency: 0, correct: false} ]},
+				{title: "When was the US Constitution signed?", options:[{name:'1783', frequency: 0, correct: false}, {name:'1776', frequency: 0, correct: false}, {name:'1787', frequency: 0, correct: true}, {name:'1912', frequency: 0, correct: false} ]},
+				{title: "Who is the best Disney Princess?", options:[{name:'Mulan', frequency: 0, correct: true}, {name:'Rapunzel', frequency: 0, correct: false}, {name:'Ariel', frequency: 0, correct: false}, {name:'Cinderella', frequency: 0, correct: false} ]}
+			]};
+			accounts.forEach(account => {
+				for(let i = 0; i < 3; i++) {
+					data.questions[i].options[account.answers[i]].frequency += 1;
+				}
+			});
+			return data;
+		});
+	};
+
 createDB();
 module.exports = {
 	create,
@@ -290,5 +311,6 @@ module.exports = {
 	remove,
 	checkPassword,
 	getAnswers,
-	validate
+	validate,
+	getAnswerFrequency
 };
