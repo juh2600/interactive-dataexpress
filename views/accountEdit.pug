@@ -11,14 +11,14 @@ block content
 	h1#title Edit Account
 	form#dataForm(onsubmit="return false")
 		section#userInfo
-			div#usernameCtr
-				label(for="username") Username:
-				input#username(type="text", name="username", pattern=".{3,32}", placeholder="username", title="Must consist of between three (3) and thirty-two (32) characters, all of which must be alphanumeric or underscores", value=user.username)
+			div#newUsernameCtr
+				label(for="newUsername") Username:
+				input#newUsername(type="text", name="newUsername", pattern=".{3,32}", placeholder="new username", title="Must consist of between three (3) and thirty-two (32) characters, all of which must be alphanumeric or underscores", value=user.username)
 				span.validationMessage
 
 			div#newPasswordCtr
 				label(for="newPassword") New Password:
-				input#password(type="password", name="newPassword", pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,64}", placeholder="new password", title="Must consist of between eight (8) and sixty-four (64) characters, among which must be at least one (1) uppercase letter, one (1) lowercase letter, and one (1) digit")
+				input#newPassword(type="password", name="newPassword", pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,64}", placeholder="new password", title="Must consist of between eight (8) and sixty-four (64) characters, among which must be at least one (1) uppercase letter, one (1) lowercase letter, and one (1) digit")
 				span.validationMessage
 
 
@@ -74,6 +74,6 @@ block content
 		section#submit
 			div#oldPasswordCtr
 				label(for="oldPassword") Enter password to update:
-				input#oldPassword(type="password", name="password", required)
+				input#oldPassword(type="password", name="oldPassword", required, placeholder="old password")
 				span.validationMessage
 			input(type="submit", value="Update Account")

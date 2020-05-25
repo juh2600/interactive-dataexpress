@@ -115,6 +115,7 @@ const editAccount = (req, res) => {
 	else {
 		lastVisited = "Never";
 	}
+	res.cookie('username', req.session.user.username); // don't need to save it forever
 	res.cookie("lastVisitedEditAccount", getCurrentDate(), {maxAge: 9999999999});
 	AccountsAPI.get(req.session.user.username).then(account => {
 		let user = Object.assign({}, account, {dob: account.dob.toISOString().match(/^.*(?=T)/)[0]});
