@@ -78,5 +78,10 @@ block content
 				option(value='9') 6
 				option(value='10') 7
 				option(value='11') 8
+			input(type="range" min="1" max="360" class="slider" id="colorPicker")
+		div#picture
+			img(src=`http://api.adorable.io/avatars/face/eyes${'eyes'}/nose${'nose'}/mouth${'mouth'}/${'hsl'}` id='pic')
+
 		input(type="submit", value="Create Account")
+	script(src="/scripts/avatar.js")
 	script(src="/scripts/formValidation.js")
