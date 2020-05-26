@@ -35,10 +35,10 @@ const accountSchema = mongoose.Schema({
 		validate: { validator: wrapErrorForMongoose(validator.valid.answers) }
 	},
 
-	avatar_args: {
+	avatarArgs: {
 		type: [Number],
 		required: true,
-		validate: { validator: wrapErrorForMongoose(validator.valid.avatar_args) }
+		validate: { validator: wrapErrorForMongoose(validator.valid.avatarArgs) }
 	}
 
 
