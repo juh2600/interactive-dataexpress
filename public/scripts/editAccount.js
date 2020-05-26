@@ -41,7 +41,7 @@ const EditAccountForm = {
 			data.avatarArgs.push(parseInt(element.value));
 		});
 		//data.avatarArgs.push(parseInt(document.getElementById('avatarColor').value.replace('#', '0x')));
-		data.avatarArgs[3] = parseInt('0x' + Util.rainbow(360, data.avatarArgs[3]));
+		//data.avatarArgs[3] = parseInt('0x' + Util.rainbow(360, data.avatarArgs[3]));
 		Object.keys(data).forEach((field) => {
 			if(!data[field]) delete data[field];
 		});
