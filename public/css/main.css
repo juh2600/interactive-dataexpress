@@ -351,9 +351,10 @@ form hr {
 }
 
 input[type="submit"] {
-    margin:auto;
     display:block;
-    padding:0.8em 1.5em;
+    margin:auto;
+    height:3em;
+    width: 12em;
     border-radius: 5px;
     background-color: #efefef;
     border:1px solid #888;
@@ -363,6 +364,33 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #ddd;
+}
+
+/*=====================================
+              Avatar
+======================================*/
+
+#avatar {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "avatarTitle avatarTitle" "avatarOptions avatarPicture";
+}
+
+#avatar > p {
+    grid-area: avatarTitle;
+}
+
+#avatarOptions {
+    grid-area: avatarOptions;
+}
+
+#avatarPicture {
+    grid-area: avatarPicture;
+    text-align: right;
+
+}
+#avatarPicture > img {
+    width: 60%;
 }
 
 /*=====================================
@@ -410,6 +438,7 @@ footer {
     .navBtn{
         max-width: 6em;
     }
+    
 }
 
 @media screen and (max-width: 350px) {

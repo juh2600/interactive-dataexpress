@@ -34,8 +34,11 @@ const Avatar = {
 		Object.keys(this.fields).forEach((field) => {
 			let cap = field[0].toLocaleUpperCase() + field.substr(1);
 			console.log(cap);
-			this.fields[field] = document.getElementById(`avatar${cap}`);
-			this.fields[field].addEventListener('input', () => this.updatePicture());
+            this.fields[field] = document.getElementById(`avatar${cap}`);
+            if(field == "color") 
+                this.fields[field].addEventListener('change', () => this.updatePicture());
+            else
+			    this.fields[field].addEventListener('input', () => this.updatePicture());
 		});
 			this.updatePicture();
 	}

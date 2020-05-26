@@ -10,6 +10,9 @@
 
 	input[type=submit] {
 		grid-area: submit;
+		margin: 0;
+		margin-left:auto;
+    	margin-top: 1em;
 	}
 
 	#oldPassword:valid {
