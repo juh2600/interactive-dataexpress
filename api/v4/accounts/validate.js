@@ -88,11 +88,11 @@ const valid = {
 	},
 
 	answer: (a) => {
-		if(a === null || a === undefined) return `No answer was provided`;
+		if(a === null || a === undefined) return `No valid answer was provided`;
 		if(a.constructor.name != 'Number' || a < 0 || a > 3 || a !== Math.floor(a)) return `An invalid answer was provided`;
 	},
 
-	avatar_args: function(args) {
+	avatarArgs: function(args) {
 		if(!args) return `Avatar arguments are required but were not provided`;
 		if(args.constructor.name != 'Array') return `Avatar arguments must be an array`;
 		let arg_descs = ['eyes', 'nose', 'mouth', 'color'];

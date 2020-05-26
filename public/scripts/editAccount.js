@@ -35,12 +35,13 @@ const EditAccountForm = {
 			data.answers.push(parseInt(element.value));
 		});
 		data.avatarArgs = [];
-		['Eyes', 'Nose', 'Mouth'].forEach((i) => {
+		['Eyes', 'Nose', 'Mouth', 'Color'].forEach((i) => {
 			let id = `avatar${i}`;
 			let element = document.getElementById(id);
 			data.avatarArgs.push(parseInt(element.value));
 		});
-		data.avatarArgs.push(parseInt(document.getElementById('avatarColor').value.replace('#', '0x')));
+		//data.avatarArgs.push(parseInt(document.getElementById('avatarColor').value.replace('#', '0x')));
+		data.avatarArgs[3] = parseInt('0x' + Util.rainbow(360, data.avatarArgs[3]));
 		Object.keys(data).forEach((field) => {
 			if(!data[field]) delete data[field];
 		});
@@ -123,8 +124,7 @@ const EditAccountForm = {
 
 		[1,2,3].forEach((i) => {
 			let select = document.querySelector(`#securityQuestion${i}`);
-			let span = document.querySelector(
-				`#securityQuestion${i}+span.validationMessage`);
+			let span = {};
 			if(errors.answers
 				&& errors.answers.constructor.name == 'Array'
 				&& errors.answers[i-1]) {
@@ -137,12 +137,11 @@ const EditAccountForm = {
 		let avatarComponents = ['Eyes', 'Nose', 'Mouth', 'Color'];
 		for(let i in avatarComponents) {
 			let input = document.querySelector(`#avatar${avatarComponents[i]}`);
-			let span = document.querySelector(
-				`#avatar${avatarComponents[i]}+span.validationMessage`);
+			let span = {};
 			if(errors.avatarArgs
 				&& errors.avatarArgs.constructor.name == 'Array'
 				&& errors.avatarArgs[i]) {
-				this.displayError(input, span, errors.answers[i]);
+				this.displayError(input, span, errors.avatarArgs[i]);
 			} else {
 				this.clearError(input, span);
 			}

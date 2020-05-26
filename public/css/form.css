@@ -4,7 +4,8 @@ input:not([type=submit]) {
 input:not([type=submit]):valid {
 	border-color: #22cc22;
 }
-input:not([type=submit]):invalid:not(:placeholder-shown) {
+input:not([type=submit]):invalid:not(:placeholder-shown),
+select:invalid {
 	border-color: #ff2222;
 }
 input:not([type=submit])+span.validationMessage,

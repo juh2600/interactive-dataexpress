@@ -1,6 +1,7 @@
 extends layout
 
 append scripts
+	+js('util')
 	+js('editAccount')
 	//-script(src="/scripts/accountEditPage.js")
 	//-script(src="/scripts/formValidation.js")
@@ -52,7 +53,6 @@ block content
 					option(value="1") Oct 03 1998
 					option(value="2") Nov 11 1999
 					option(value="3") May 14 1997
-				span.validationMessage
 
 			div#securityQuestionCtr2
 				label(for="securityQuestion2") When was the US Constitution signed?
@@ -61,7 +61,6 @@ block content
 					option(value="1") 1776
 					option(value="2") 1787
 					option(value="3") 1912
-				span.validationMessage
 
 			div#securityQuestionCtr3
 				label(for="securityQuestion3") Who is the best Disney Princess?
@@ -70,7 +69,6 @@ block content
 					option(value="1") Rapunzel
 					option(value="2") Ariel
 					option(value="3") Cinderella
-				span.validationMessage
 
 		section#avatar
 			p Create your Profile Pic!
