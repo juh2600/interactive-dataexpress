@@ -196,7 +196,14 @@ const EditAccountForm = {
 			select.addEventListener('input', (evt) => {
 				this.validateAll();
 			});
-			select.selectedIndex = select.dataset.answer;
+			let options = select.children;
+			for (let i in options) {
+				console.log(options.item(i).value);
+				if(options.item(i).value == select.dataset.answer) {
+					select.selectedIndex = i;
+				}
+			}
+			
 		});
 		document.querySelector('form')
 			.addEventListener('submit', (evt) => {
