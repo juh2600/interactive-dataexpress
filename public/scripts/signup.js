@@ -29,13 +29,20 @@ const SignUpForm = {
 			let element = document.getElementById(id);
 			data.answers.push(parseInt(element.value));
 		});
+		data.avatarArgs = [];
+		['Eyes', 'Nose', 'Mouth'].forEach((i) => {
+			let id = `avatar${i}`;
+			let element = document.getElementById(id);
+			data.avatarArgs.push(parseInt(element.value));
+		});
+		data.avatarArgs.push(parseInt(document.getElementById('avatarColor').value.replace('#', '0x')));
 		return data;
 	},
 
 	validateAll: async function() {
 		let data = this.serialize();
 		console.log('Sending body:', data);
-		return this.call('/api/v3/accounts/validate', data).then((res) => {
+		return this.call('/api/v4/accounts/validate', data).then((res) => {
 			console.log(res);
 			if(res.status == 204) return {};
 			else return res.json();
@@ -90,7 +97,7 @@ const SignUpForm = {
 		this.validateAll().then((ok) => {
 			if(ok) {
 				let data = this.serialize();
-				this.call('/api/v3/accounts/create', data).then((res) => {
+				this.call('/api/v4/accounts/create', data).then((res) => {
 					console.log(res);
 					console.log(res.text());
 					if(res.status == 201) {

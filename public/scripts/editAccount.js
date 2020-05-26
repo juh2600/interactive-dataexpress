@@ -34,6 +34,13 @@ const EditAccountForm = {
 			let element = document.getElementById(id);
 			data.answers.push(parseInt(element.value));
 		});
+		data.avatarArgs = [];
+		['Eyes', 'Nose', 'Mouth'].forEach((i) => {
+			let id = `avatar${i}`;
+			let element = document.getElementById(id);
+			data.avatarArgs.push(parseInt(element.value));
+		});
+		data.avatarArgs.push(parseInt(document.getElementById('avatarColor').value.replace('#', '0x')));
 		Object.keys(data).forEach((field) => {
 			if(!data[field]) delete data[field];
 		});
@@ -67,7 +74,7 @@ const EditAccountForm = {
 
 	validateAll: async function() {
 		let data = this.serializeChanges();
-		return this.call('/api/v3/accounts/validate', data).then((res) => {
+		return this.call('/api/v4/accounts/validate', data).then((res) => {
 			if(res.status == 204) return {};
 			else return res.json();
 		}).then((errors) => {
@@ -127,6 +134,20 @@ const EditAccountForm = {
 			}
 		});
 
+		let avatarComponents = ['Eyes', 'Nose', 'Mouth', 'Color'];
+		for(let i in avatarComponents) {
+			let input = document.querySelector(`#avatar${avatarComponents[i]}`);
+			let span = document.querySelector(
+				`#avatar${avatarComponents[i]}+span.validationMessage`);
+			if(errors.avatarArgs
+				&& errors.avatarArgs.constructor.name == 'Array'
+				&& errors.avatarArgs[i]) {
+				this.displayError(input, span, errors.answers[i]);
+			} else {
+				this.clearError(input, span);
+			}
+		}
+
 		let pwInput = document.getElementById('oldPassword');
 		let pwSpan = document.querySelector('#oldPassword+span.validationMessage');
 		if(errors.authentication) {
@@ -141,7 +162,7 @@ const EditAccountForm = {
 		this.validateAll().then((ok) => {
 			if(ok) {
 				let data = this.serializeAll();
-				this.call('/api/v3/accounts/update', data).then((res) => {
+				this.call('/api/v4/accounts/update', data).then((res) => {
 					if(res.status == 204) {
 						this.redirect();
 						return {}; // pass this into displayErrors a few lines down just to shut up the error while testing
