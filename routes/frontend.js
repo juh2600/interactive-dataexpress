@@ -3,8 +3,8 @@ const expressSession = require('express-session');
 const { respond, requirePresenceOfParameter } = require('./util');
 const cookieParser = require("cookie-parser");
 require('dotenv').config();
-const AccountsAPI = require(`../api/${process.env.API_VERSION}/accounts.js`);
-
+const AccountsAPI = require(`../api/${process.env.API_VERSION}/accounts`);
+const Util = require('../public/scripts/util');
 
 let app = null;
 
@@ -75,8 +75,9 @@ const logout = (req, res) => {
 const loginPost = (req, res) => {
 	AccountsAPI.checkPassword(req.body.username, req.body.password).then( isOK =>{
 		if(isOK) {
-			newSession(req);
-			res.redirect("/dashboard");
+			newSession(req).finally( () => {
+				res.redirect("/dashboard");
+			});
 		}
 		else {
 			throw 'Username/password mismatch'; // this doesn't get used anywhere, but it tells us in code what's going on
@@ -90,11 +91,18 @@ const loginPost = (req, res) => {
 }
 
 
-const newSession = req => {
-	req.session.user = {
-		isAuthenticated: true,
-		username: req.body.username
-	}
+const newSession = async req => {
+	//console.log(req.body);
+	return AccountsAPI.get(req.body.username).then(account => {
+		//console.log(account);
+		req.session.user = {
+			isAuthenticated: true,
+			username: account.username,
+			avatarURL: `http://api.adorable.io/avatars/face/eyes${account.avatarArgs[0]}/nose${account.avatarArgs[1]}/mouth${account.avatarArgs[2]}/${Util.rainbow(360, account.avatarArgs[3])}`
+		}
+
+	});
+	
 }
 // Private routes
 //GET
@@ -169,35 +177,13 @@ const internalErrorPage = (req, res) => {
 
 //Post route for account edit form
 const editAccPost = (req, res) => {
-	AccountsAPI.checkPassword(req.session.user.username, req.body.password).then( isOK => {
-		if(isOK) {
-			AccountsAPI.get(req.session.user.username).then(account => {
-				let answers = [];
-				req.body.answers = [req.body.answer1, req.body.answer2, req.body.answer3];
-				for(let i in req.body.answers) {
-					if(isNaN(parseInt(req.body.answers[i]))) answers.push(account.answers[i]);
-					else answers.push(parseInt(req.body.answers[i]));
-				}
-				Object.keys(req.body).forEach(key => {
-					if(!req.body[key])
-						delete req.body[key];
-				});
-				AccountsAPI.update(req.session.user.username, req.body).then(isOK => {
-					if(isOK) {
-						if(req.body.username)
-							req.session.user.username = req.body.username;
-						dashboard(req, res);
-					} else editAccount(req, res);
-				}).catch(err => {
-					logger.error(err);
-					editAccount(req, res);
-				});
-			});
-		}
-		else{
-			editAccount(req, res);
-		}
-	}).catch(err => {editAccount(req, res);});
+	if(req.body.username) {
+		req.session.user.username = req.body.username;
+	}
+	if(req.body.avatarURL) {
+		req.session.user.avatarURL = req.body.avatarURL;
+	}
+	res.sendStatus(204);
 }
 
 //Post route for signup form

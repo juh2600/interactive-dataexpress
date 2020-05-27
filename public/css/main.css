@@ -61,13 +61,20 @@ nav#signedOut > ul {
     transition: background-color 0.2s ease;
     cursor: pointer;
     height:100%;
-    padding:0 2em;
     display:flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
     color:white;
     text-decoration: none;
+}
+
+#signedOut .navBtn {
+    max-width: 8em;
+}
+
+#signedIn .navBtn > a {
+    padding:0 2em;
 }
 
 .navBtn > a:hover {
@@ -91,7 +98,6 @@ nav#signedIn {
 }
 #accountBtn {
     height:100%;
-    padding:0 1em; 
     background-color:#333;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -102,21 +108,28 @@ nav#signedIn {
 
 
 #accountBtn > div {
-    width: 1.7em;
-    position:relative;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
+    display:flex;
+    justify-content: space-between;
+    padding: 0;
+    padding-right:0.5em;
 }
-.menuBar {
-    width:100%;
-    background-color: #fff;
-    border-radius: 10%;
-    height:0.15em;
+
+#accountBtn > div > p {
+    font-weight: bold;
+    font-size: 2em;
+    padding:0 0.3em;
+    margin:0;
+    margin-top:0.3em;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
-.menuBar.mid{
-    margin:0.3em 0;
+#avatarImgNav {
+    height:3em;
+    margin-top:0.5em;
 }
+
 
 #slider {
     position: fixed;
@@ -442,11 +455,16 @@ footer {
     .navBtn{
         max-width: 6em;
     }
-    
+    #signedIn .navBtn > a {
+        padding:0 1em;
+    }
 }
 
 @media screen and (max-width: 350px) {
     #slider {
         width:100%;
+    }
+    nav {
+        font-size: 0.8em;
     }
 }

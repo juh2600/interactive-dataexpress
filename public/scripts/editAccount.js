@@ -163,7 +163,13 @@ const EditAccountForm = {
 				let data = this.serializeAll();
 				this.call('/api/v4/accounts/update', data).then((res) => {
 					if(res.status == 204) {
-						this.redirect();
+						let sessionData = {
+							username: data.changes.username,
+							avatarURL: `http://api.adorable.io/avatars/face/eyes${data.changes.avatarArgs[0]}/nose${data.changes.avatarArgs[1]}/mouth${data.changes.avatarArgs[2]}/${Util.rainbow(360, data.changes.avatarArgs[3])}`
+						}
+						this.call('/account/edit', sessionData).then((res) => {
+							this.redirect();
+						});
 						return {}; // pass this into displayErrors a few lines down just to shut up the error while testing
 					}
 					if(res.status == 401) {
@@ -198,7 +204,7 @@ const EditAccountForm = {
 			});
 			let options = select.children;
 			for (let i in options) {
-				console.log(options.item(i).value);
+				
 				if(options.item(i).value == select.dataset.answer) {
 					select.selectedIndex = i;
 				}

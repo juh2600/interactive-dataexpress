@@ -19,3 +19,7 @@ const Util = {
 	}
 
 };
+
+module.exports = {
+	rainbow: Util.rainbow
+}
