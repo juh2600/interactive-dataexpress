@@ -1,6 +1,9 @@
 nav#signedIn
-	div.navBtn
-		a(href="/dashboard") Dashboard
+	div#directoryBtnContainer
+		div.navBtn
+			a(href="/") Home
+		div.navBtn
+			a(href="/dashboard") Dashboard
 	div#account
 		p=session.user.username
 		div#accountBtn
